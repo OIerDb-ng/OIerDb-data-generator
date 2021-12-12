@@ -8,7 +8,7 @@ let output = {};
 fs.readdirSync('static')
     .filter((fn) => fn.endsWith('.json'))
     .map((fn) => {
-        let name = path.basename(fn);
+        let name = path.basename(fn, '.json');
         let content = fs.readFileSync(`static/${fn}`, 'utf8');
         output[name] = {
             enumerable: true,
