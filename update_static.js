@@ -23,5 +23,5 @@ output.schools = {
     writable: true,
 };
 
-fs.writeFileSync('dist/static.js', `Object.defineProperties(OIerDB,${JSON.stringify(output)});\n`);
+fs.writeFileSync('dist/static.js', `Object.defineProperties(OIerDb,${JSON.stringify(output)});\n`);
 fs.unlinkSync('dist/school.json');
