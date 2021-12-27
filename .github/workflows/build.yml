@@ -28,9 +28,11 @@ jobs:
             - name: Build
               run: python main.py
             - name: Deploy to GitHub Pages
+              if: ${{ github.event_name == 'push' && github.repository_owner == 'oierdb-ng' }}
               uses: peaceiris/actions-gh-pages@v3
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: dist
                   user_name: BaoshuoBot
                   user_email: bot@baoshuo.ren
+                  cname: oier-data.baoshuo.dev
