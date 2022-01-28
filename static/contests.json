@@ -556,5 +556,11 @@
 		"name": "NOIP2021",
 		"type": "NOIP",
 		"year": 2021
+	},
+	{
+		"fall_semester": false,
+		"name": "WC2022",
+		"type": "WC",
+		"year": 2022
 	}
 ]
