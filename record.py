@@ -23,7 +23,7 @@ class Record:
         self.ems = util.enrollment_middle(contest, grades)
 
     def __repr__(self):
-        return '{}(pro={},school={},grade={},c={})'.format(self.oier.name, self.province, self.school.name, self.grade, self.contest.name)
+        return '{}(pro={},school={},ems={},c={})'.format(self.oier.name, self.province, self.school.name, self.ems, self.contest.name)
 
     @staticmethod
     def distance(A, B, inf=2147483647):
@@ -41,7 +41,7 @@ class Record:
                     return inf
                 if abs(a.gender - b.gender) == 2:
                     return inf
-                if a.contest.school_year() == b.contest.school_year() and len(a.ems & b.ems) == 0:
+                if a.contest.school_year() == b.contest.school_year() and len(set(a.ems) & set(b.ems)) == 0:
                     return inf
 
         schools = set(record.school.id for record in chain(A, B))

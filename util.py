@@ -20,7 +20,7 @@ def __main__():
     from contest import Contest
     global add_contestant, contests, contest_type_coefficient,		\
         decay_coefficient, enrollment_middle, get_contest_id,	\
-        get_grades, get_initials, get_mode, lcs, rank_coefficient
+        get_grades, get_initials, get_mode, get_weighted_mode, lcs, rank_coefficient
 
     with open('static/contests.json') as f:
         for contest in json.load(f):
@@ -93,15 +93,16 @@ def __main__():
         contest: 比赛对象。
         grades: 所有可能的年级列表。
 
-        返回值: set，表示所有可能的入学年份列表。
+        返回值: dict，表示所有可能的入学年份列表，值表示优先级。
         '''
 
         year = contest.school_year()
         mask = grades
-        ems = set()
+        is_primary_or_none = grades == 4290837504 # "小学/无" 中小学优先级比大学高
+        ems = {}
         while mask:
             grade = (mask & -mask).bit_length() - 16
-            ems.add(year - grade + 1)
+            ems[year - grade + 1] = (1 if is_primary_or_none and grade > 5 else 2)
             mask &= mask - 1
         return ems
 
@@ -114,6 +115,20 @@ def __main__():
         '''
 
         counter = Counter(chain(*sets))
+        most = counter.most_common(1)[0][1]
+        return sorted(k for k, v in counter.items() if v == most)
+
+    def get_weighted_mode(dicts):
+        ''' 获取最佳初中入学年份。
+
+        dicts: 字典的列表，每个字典表示可能的入学年份字典以及相应的优先级。
+
+        返回值: 最佳入学年份的列表。
+        '''
+
+        counter = Counter()
+        for d in dicts:
+            counter.update(d)
         most = counter.most_common(1)[0][1]
         return sorted(k for k, v in counter.items() if v == most)
 

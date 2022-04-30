@@ -123,7 +123,7 @@ def __main__():
             # UID 定为该 OIer 首次出现的<b>有效</b>行号
             uid = min(recordseq, key=lambda record: record.id).id
             # 入学年份取众数，相同的话取最早的
-            em = util.get_mode([record.ems for record in recordseq])[0]
+            em = util.get_weighted_mode([record.ems for record in recordseq])[0]
             # 性别如果唯一则取之，空或不唯一置空（如跨性别）
             gender = set(
                 record.gender for record in recordseq if record.gender)
