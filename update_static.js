@@ -24,4 +24,5 @@ output.schools = {
 };
 
 fs.writeFileSync('dist/static.js', `Object.defineProperties(OIerDb,${JSON.stringify(output)});\n`);
+fs.writeFileSync('dist/static.mjs', `export default ${JSON.stringify(output)}\n`);
 fs.unlinkSync('dist/school.json');
