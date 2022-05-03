@@ -207,6 +207,8 @@ def __main__():
             sha512 = hashlib.sha512(f.read()).hexdigest()
         with open('dist/result.sha512.js', 'w') as f:
             print('OIerDb.upstream_sha512 = \'' + sha512 + '\';', file=f)
+        with open('dist/result.sha512.mjs', 'w') as f:
+            print('export const upstream_sha512 = \'' + sha512 + '\';', file=f)
 
     def update_static():
         '调用 update_static.js 以产生静态 JSON 信息。'
