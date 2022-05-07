@@ -562,5 +562,12 @@
 		"name": "WC2022",
 		"type": "WC",
 		"year": 2022
+	},
+	{
+		"fall_semester": false,
+		"full_score": 600,
+		"name": "NGOI2022",
+		"type": "NGOI",
+		"year": 2022
 	}
 ]
