@@ -7,9 +7,9 @@ from sys import stderr
 getcontext().prec = 64
 
 provinces = ['安徽', '北京', '福建', '甘肃', '广东', '广西', '贵州', '海南', '河北', '河南',
-                         '黑龙江', '湖北', '湖南', '吉林', '江苏', '江西', '辽宁', '内蒙古', '山东', '山西',
-                         '陕西', '上海', '四川', '天津', '新疆', '浙江', '重庆', '宁夏', '云南', '澳门',
-                         '香港', '青海', '西藏', '台湾']
+             '黑龙江', '湖北', '湖南', '吉林', '江苏', '江西', '辽宁', '内蒙古', '山东', '山西',
+             '陕西', '上海', '四川', '天津', '新疆', '浙江', '重庆', '宁夏', '云南', '澳门',
+             '香港', '青海', '西藏', '台湾']
 
 award_levels = ['金牌', '银牌', '铜牌', '一等奖', '二等奖', '三等奖', '国际金牌', '国际银牌', '国际铜牌']
 
@@ -46,7 +46,7 @@ def __main__():
         + [D('0.15') * i for i in range(239, 50, -1)]	\
         + [D('0.05') * i for i in range(150, -1, -1)]
     assert len(rc_list) == 401
-    assert sorted(rc_list, reverse=True) == rc_list
+    assert sorted(rc_list, reverse = True) == rc_list
 
     def get_initials(name):
         ''' 获取拼音首字母。
@@ -56,7 +56,7 @@ def __main__():
         return ''.join(get_initial_list(name))
 
     def get_initial_list(name):
-        initial = pypinyin.lazy_pinyin(name, style=pypinyin.Style.FIRST_LETTER)
+        initial = pypinyin.lazy_pinyin(name, style = pypinyin.Style.FIRST_LETTER)
         for i in range(len(name), 0, -1):
             if name[:i] in surnames:
                 initial[:i] = surnames[name[:i]]
@@ -142,7 +142,7 @@ def __main__():
 
         return D('1.25') ** (year - 2000)
 
-    def rank_coefficient(rank, total, name=None):
+    def rank_coefficient(rank, total, name = None):
         ''' 获取因排名产生的系数，<b>该函数可以自行修改</b>。
 
         rank: 当前排名。
@@ -154,10 +154,10 @@ def __main__():
 
         if not (1 <= rank <= total):
             print('\x1b[01;33mwarning: \x1b[0m诡异的排名：\x1b[32m{}\x1b[0m / \x1b[32m{}\x1b[0m (from \x1b[32m{}\x1b[0m)，已自动 clamped'.format(
-                rank, total, name), file=stderr)
+                rank, total, name), file = stderr)
         return rc_list[400 * max(min(rank, total), 1) // total]
 
-    def contest_type_coefficient(type, name=None):
+    def contest_type_coefficient(type, name = None):
         ''' 获取不同比赛类型产生的系数，<b>该函数可以自行修改</b>。
 
         type: <b>字符串</b>，为比赛类型。
@@ -168,7 +168,7 @@ def __main__():
 
         if type not in scoring:
             print('\x1b[01;33mwarning: \x1b[0m未知的比赛类型：\x1b[32m\'{}\'\x1b[0m (from \x1b[32m{}\x1b[0m)，不计算贡献'.format(
-                type, name), file=stderr)
+                type, name), file = stderr)
         return D(scoring.get(type, '0'))
 
     def lcs(str1, str2):

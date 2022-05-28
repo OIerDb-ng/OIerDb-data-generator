@@ -17,13 +17,13 @@ def get_kleck():
 
 def get_redirect(entry):
     res = requests.get('https://baike.baidu.com/item/' +
-                       entry, headers=__headers__)
+                       entry, headers = __headers__)
     res.encoding = 'utf8'
     if match := re.search(__re_title__, res.text):
         return match.group(1)
     else:
         res = requests.get('http://www.baidu.com/s?wd=' + entry,
-                           headers=__headers__, cookies={'kleck': get_kleck()})
+                           headers = __headers__, cookies = {'kleck': get_kleck()})
         res.encoding = 'utf8'
         if match := re.search(__re_baike__, res.text):
             return match.group(1)

@@ -69,7 +69,7 @@ class School:
         city = ('未分区' if ret is None else ret[1])
         li = [(util.lcs(school.name, name), school)
               for school in School.__schools_by_pc__.get((province, city), [])]
-        li.sort(key=lambda pair: -pair[0])
+        li.sort(key = lambda pair: -pair[0])
         li = li[:3]
         for _, school in li:
             if not hasattr(school, 'baike_cache'):

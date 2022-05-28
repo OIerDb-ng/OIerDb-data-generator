@@ -39,7 +39,7 @@ def __main__():
                 parse_school_line(line.strip())
             except ValueError as e:
                 print('\x1b[01mschool.txt:{}: \x1b[031merror: \x1b[0;37m\'{}\'\x1b[0m，{}'.format(
-                    idx + 1, line.strip(), e), file=stderr)
+                    idx + 1, line.strip(), e), file = stderr)
 
     def parse_raw_line(line):
         '''解析 raw.txt 文件的一行。
@@ -83,9 +83,9 @@ def __main__():
                 parse_raw_line(line.strip())
             except ValueError as e:
                 print('\x1b[01mraw.txt:{}: \x1b[31merror: \x1b[0;37m\'{}\'\x1b[0m，{}'.format(
-                    idx + 1, line.strip(), e), file=stderr)
+                    idx + 1, line.strip(), e), file = stderr)
 
-    def attempt_merge(threshold=240):
+    def attempt_merge(threshold = 240):
         ''' 尝试合并信息。
 
         threshold: 距离阈值。
@@ -109,24 +109,32 @@ def __main__():
                         if (dist := Record.distance(a[j], a[i], threshold + 1)) < best:
                             best, bi, bj = dist, j, i
                 if best <= threshold:
+                    stay_down = Record.check_stay_down(a[bi], a[bj])
+                    if stay_down == 1:
+                        for record in a[bi]:
+                            record.keep_grade()
+                    elif stay_down == -1:
+                        for record in a[bj]:
+                            record.keep_grade()
+                    else:
+                        assert stay_down == 0
                     a[bi].extend(a[bj])
                     del a[bj]
                 else:
                     break
             if '--show-incomplete-merge' in argv and len(a) != 1:
                 print('\x1b[01;33mwarning: \x1b[0;32m\'{}\'\x1b[0m 未完全合并，合并进度为 \x1b[32m{}\x1b[0m → \x1b[32m{}\x1b[0m'.format(
-                    oier.name, original_length, len(a)), file=stderr)
+                    oier.name, original_length, len(a)), file = stderr)
             recordseqs.extend(a)
         OIer.clear()
         for recordseq in recordseqs:
             original = recordseq[0].oier
             # UID 定为该 OIer 首次出现的<b>有效</b>行号
-            uid = min(recordseq, key=lambda record: record.id).id
+            uid = min(recordseq, key = lambda record: record.id).id
             # 入学年份取众数，相同的话取最早的
-            em = util.get_weighted_mode([record.ems for record in recordseq])[0]
+            em = util.get_weighted_mode([record.ems for record in recordseq if not record.is_keep_grade()])[0]
             # 性别如果唯一则取之，空或不唯一置空（如跨性别）
-            gender = set(
-                record.gender for record in recordseq if record.gender)
+            gender = set(record.gender for record in recordseq if record.gender)
             gender = gender.pop() if len(gender) == 1 else 0
             oier = OIer(original.name, original.identifier, gender, em, uid)
             oier.records = recordseq[:]
@@ -148,36 +156,36 @@ def __main__():
         new_schools = sorted(set(new_schools))
         with open('dist/merge_preview.txt', 'w') as f:
             print('''# 用 '#' 号表示注释。
-# 这是由 main.py 自动生成的学校合并确认文件，本文件的格式有如下几种：
-#   b,<name>,<origin>，表示将新名称 <name> 合并到 <origin>，将名称作为别名。
-#   f,<name>,<origin>，表示将新名称 <name> 合并到 <origin>，并将新名称设为正式名称。
-#   c,<province>,<city>,<name>，表示插入学校 <province>,<city>,<name>。''', file=f)
-            for province, school_name in new_schools:
-                res = School.find_candidate(school_name, province)
-                method = res[0]
-                if method == 'b':
-                    school = res[1]
-                    print('\x1b[32m[direct redirect]\x1b[0m: \x1b[35m\'{}\'\x1b[0m → \x1b[37m\'{}\'\x1b[0m'.format(
-                        school_name, school.name))
-                    print('b {} {}'.format(school_name, school.name), file=f)
-                elif method == 'f':
-                    school = res[1]
-                    print('\x1b[32m[name changed]\x1b[0m: \x1b[35m\'{}\'\x1b[0m ← \x1b[37m\'{}\'\x1b[0m'.format(
-                        school_name, school.name))
-                    print('f {} {}'.format(school_name, school.name), file=f)
-                elif method == 'fs':
-                    school = res[1]
-                    standard = res[2]
-                    print('\x1b[32m[towards standard name]\x1b[0m: (\x1b[35m\'{}\'\x1b[0m, \x1b[37m\'{}\'\x1b[0m) → \x1b[33m\'{}\'\x1b[0m'.format(
-                        school_name, school.name, standard))
-                    print('f {} {}'.format(standard, school.name), file=f)
-                    print('b {} {}'.format(school_name, school.name), file=f)
-                elif method == 'c':
-                    city = res[1]
-                    print('\x1b[32m[create]\x1b[0m: (\x1b[35m\'{}\'\x1b[0m, \x1b[35m\'{}\'\x1b[0m, \x1b[35m\'{}\'\x1b[0m)'.format(
-                        province, city, school_name))
-                    print('c {} {} {}'.format(
-                        province, city, school_name), file=f)
+        # 这是由 main.py 自动生成的学校合并确认文件，本文件的格式有如下几种：
+        #   b,<name>,<origin>，表示将新名称 <name> 合并到 <origin>，将名称作为别名。
+        #   f,<name>,<origin>，表示将新名称 <name> 合并到 <origin>，并将新名称设为正式名称。
+        #   c,<province>,<city>,<name>，表示插入学校 <province>,<city>,<name>。''', file = f)
+        for province, school_name in new_schools:
+            res = School.find_candidate(school_name, province)
+            method = res[0]
+            if method == 'b':
+                school = res[1]
+                print('\x1b[32m[direct redirect]\x1b[0m: \x1b[35m\'{}\'\x1b[0m → \x1b[37m\'{}\'\x1b[0m'.format(
+                    school_name, school.name))
+                print('b {} {}'.format(school_name, school.name), file = f)
+            elif method == 'f':
+                school = res[1]
+                print('\x1b[32m[name changed]\x1b[0m: \x1b[35m\'{}\'\x1b[0m ← \x1b[37m\'{}\'\x1b[0m'.format(
+                    school_name, school.name))
+                print('f {} {}'.format(school_name, school.name), file = f)
+            elif method == 'fs':
+                school = res[1]
+                standard = res[2]
+                print('\x1b[32m[towards standard name]\x1b[0m: (\x1b[35m\'{}\'\x1b[0m, \x1b[37m\'{}\'\x1b[0m) → \x1b[33m\'{}\'\x1b[0m'.format(
+                    school_name, school.name, standard))
+                print('f {} {}'.format(standard, school.name), file = f)
+                print('b {} {}'.format(school_name, school.name), file = f)
+            elif method == 'c':
+                city = res[1]
+                print('\x1b[32m[create]\x1b[0m: (\x1b[35m\'{}\'\x1b[0m, \x1b[35m\'{}\'\x1b[0m, \x1b[35m\'{}\'\x1b[0m)'.format(
+                    province, city, school_name))
+                print('c {} {} {}'.format(
+                    province, city, school_name), file = f)
 
     def output_schools():
         '输出学校信息。'
@@ -187,7 +195,7 @@ def __main__():
             output.append([school.name, school.province,
                           school.city, float(round(school.score, 2))])
         with open('dist/school.json', 'w') as f:
-            json.dump(output, f, ensure_ascii=False)
+            json.dump(output, f, ensure_ascii = False)
 
     def output_compressed():
         '输出压缩的结果，不压缩的结果先咕着。'
@@ -195,7 +203,7 @@ def __main__():
         OIer.sort_by_score()
         with open('dist/result.txt', 'w') as f:
             for oier in OIer.get_all():
-                print(oier.to_compress_format(), file=f)
+                print(oier.to_compress_format(), file = f)
 
     def compute_sha512():
         '''
