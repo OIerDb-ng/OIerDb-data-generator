@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 let output = {};
 
@@ -23,6 +24,15 @@ output.schools = {
     writable: true,
 };
 
-fs.writeFileSync('dist/static.js', `Object.defineProperties(OIerDb,${JSON.stringify(output)});\n`);
-fs.writeFileSync('dist/static.mjs', `export default ${JSON.stringify(output)}\n`);
+const outputStr = JSON.stringify(output);
+
+fs.writeFileSync('dist/static.js', `Object.defineProperties(OIerDb,${outputStr});\n`);
+fs.writeFileSync('dist/static.mjs', `export default ${outputStr}\n`);
+fs.writeFileSync('dist/static.json', outputStr);
+fs.writeFileSync(
+    'dist/static.sha512.json',
+    JSON.stringify({
+        sha512: crypto.createHash('sha512').update(outputStr).digest('hex'),
+    })
+);
 fs.unlinkSync('dist/school.json');
