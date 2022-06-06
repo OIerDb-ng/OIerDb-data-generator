@@ -576,5 +576,12 @@
 		"name": "APIO2022",
 		"type": "APIO",
 		"year": 2022
+	},
+	{
+		"fall_semester": false,
+		"full_score": 300,
+		"name": "APIO2022线上",
+		"type": "APIO",
+		"year": 2022
 	}
 ]
