@@ -160,32 +160,32 @@ def __main__():
         #   b,<name>,<origin>，表示将新名称 <name> 合并到 <origin>，将名称作为别名。
         #   f,<name>,<origin>，表示将新名称 <name> 合并到 <origin>，并将新名称设为正式名称。
         #   c,<province>,<city>,<name>，表示插入学校 <province>,<city>,<name>。''', file = f)
-        for province, school_name in new_schools:
-            res = School.find_candidate(school_name, province)
-            method = res[0]
-            if method == 'b':
-                school = res[1]
-                print('\x1b[32m[direct redirect]\x1b[0m: \x1b[35m\'{}\'\x1b[0m → \x1b[37m\'{}\'\x1b[0m'.format(
-                    school_name, school.name))
-                print('b {} {}'.format(school_name, school.name), file = f)
-            elif method == 'f':
-                school = res[1]
-                print('\x1b[32m[name changed]\x1b[0m: \x1b[35m\'{}\'\x1b[0m ← \x1b[37m\'{}\'\x1b[0m'.format(
-                    school_name, school.name))
-                print('f {} {}'.format(school_name, school.name), file = f)
-            elif method == 'fs':
-                school = res[1]
-                standard = res[2]
-                print('\x1b[32m[towards standard name]\x1b[0m: (\x1b[35m\'{}\'\x1b[0m, \x1b[37m\'{}\'\x1b[0m) → \x1b[33m\'{}\'\x1b[0m'.format(
-                    school_name, school.name, standard))
-                print('f {} {}'.format(standard, school.name), file = f)
-                print('b {} {}'.format(school_name, school.name), file = f)
-            elif method == 'c':
-                city = res[1]
-                print('\x1b[32m[create]\x1b[0m: (\x1b[35m\'{}\'\x1b[0m, \x1b[35m\'{}\'\x1b[0m, \x1b[35m\'{}\'\x1b[0m)'.format(
-                    province, city, school_name))
-                print('c {} {} {}'.format(
-                    province, city, school_name), file = f)
+            for province, school_name in new_schools:
+                res = School.find_candidate(school_name, province)
+                method = res[0]
+                if method == 'b':
+                    school = res[1]
+                    print('\x1b[32m[direct redirect]\x1b[0m: \x1b[35m\'{}\'\x1b[0m → \x1b[37m\'{}\'\x1b[0m'.format(
+                        school_name, school.name))
+                    print('b {} {}'.format(school_name, school.name), file = f)
+                elif method == 'f':
+                    school = res[1]
+                    print('\x1b[32m[name changed]\x1b[0m: \x1b[35m\'{}\'\x1b[0m ← \x1b[37m\'{}\'\x1b[0m'.format(
+                        school_name, school.name))
+                    print('f {} {}'.format(school_name, school.name), file = f)
+                elif method == 'fs':
+                    school = res[1]
+                    standard = res[2]
+                    print('\x1b[32m[towards standard name]\x1b[0m: (\x1b[35m\'{}\'\x1b[0m, \x1b[37m\'{}\'\x1b[0m) → \x1b[33m\'{}\'\x1b[0m'.format(
+                        school_name, school.name, standard))
+                    print('f {} {}'.format(standard, school.name), file = f)
+                    print('b {} {}'.format(school_name, school.name), file = f)
+                elif method == 'c':
+                    city = res[1]
+                    print('\x1b[32m[create]\x1b[0m: (\x1b[35m\'{}\'\x1b[0m, \x1b[35m\'{}\'\x1b[0m, \x1b[35m\'{}\'\x1b[0m)'.format(
+                        province, city, school_name))
+                    print('c {} {} {}'.format(
+                        province, city, school_name), file = f)
 
     def output_schools():
         '输出学校信息。'

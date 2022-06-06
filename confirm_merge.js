@@ -12,7 +12,7 @@ for (let [idx, line] of schools.entries()) {
 }
 let n = schools.length;
 
-let data = fs.readFileSync('data/merge_preview.txt', 'utf8').split('\n');
+let data = fs.readFileSync('dist/merge_preview.txt', 'utf8').split('\n');
 
 for (let line of data) {
     line = line.trim();

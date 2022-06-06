@@ -569,5 +569,12 @@
 		"name": "NGOI2022",
 		"type": "NGOI",
 		"year": 2022
+	},
+	{
+		"fall_semester": false,
+		"full_score": 600,
+		"name": "APIO2022",
+		"type": "APIO",
+		"year": 2022
 	}
 ]
