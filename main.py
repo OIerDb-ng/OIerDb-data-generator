@@ -220,7 +220,7 @@ def __main__():
         with open('dist/result.sha512.mjs', 'w') as f:
             print('export const upstream_sha512 = \'' + sha512 + '\';', file=f)
         with open('dist/result.sha512.json', 'w') as f:
-            print('{"sha512":"' + sha512 + '", "size":' + file_size + '}', file=f)
+            print('{"sha512":"' + sha512 + '", "size":' + str(file_size) + '}', file=f)
 
     def update_static():
         '调用 update_static.js 以产生静态 JSON 信息。'
