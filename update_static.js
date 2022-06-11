@@ -33,7 +33,7 @@ fs.writeFileSync(
     'dist/static.sha512.json',
     JSON.stringify({
         sha512: crypto.createHash('sha512').update(outputStr).digest('hex'),
-        size: outputStr.length
+        size: new TextEncoder().encode(outputStr).length
     })
 );
 fs.unlinkSync('dist/school.json');
