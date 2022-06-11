@@ -211,6 +211,8 @@ def __main__():
         （注：使用 *.txt 后缀可以利用 gzip 压缩）
         '''
 
+        file_size = os.stat('dist/result.txt').st_size
+
         with open('dist/result.txt', 'rb') as f:
             sha512 = hashlib.sha512(f.read()).hexdigest()
         with open('dist/result.sha512.js', 'w') as f:
@@ -218,7 +220,7 @@ def __main__():
         with open('dist/result.sha512.mjs', 'w') as f:
             print('export const upstream_sha512 = \'' + sha512 + '\';', file=f)
         with open('dist/result.sha512.json', 'w') as f:
-            print('{"sha512":"' + sha512 + '"}', file=f)
+            print('{"sha512":"' + sha512 + '", "size":' + file_size + '}', file=f)
 
     def update_static():
         '调用 update_static.js 以产生静态 JSON 信息。'
