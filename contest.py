@@ -16,6 +16,7 @@ class Contest:
         self.type = settings['type']
         self.year = settings['year']
         self.fall_semester = settings['fall_semester']
+        self.full_score = settings['full_score']
         self.capacity = settings.get('capacity')
         self.contestants = []
         self.level_counts = Counter()
@@ -98,6 +99,9 @@ class Contest:
         else:
             score = float(score)
             if len(self.contestants) == 0:
+                if not (score is None) and score > self.full_score:
+                    print('\x1b[01;33mwarning: \x1b[0m超过满分的分数：\x1b[32m{}\x1b[0m > \x1b[32m{}\x1b[0m，于比赛 \x1b[32m\'{}\'\x1b[0m'.format(
+                        score, self.full_score, self.name))
                 rank = 1
             elif score == self.contestants[-1].score:
                 rank = self.contestants[-1].rank
