@@ -122,7 +122,7 @@ class OIer:
         for record in self.records:
             if record.contest.type == 'NOI':
                 l = max(l, __clnoi__.get(record.level, 0))
-            elif record.contest.type in ['NOIP', 'NOIP提高']:
+            elif record.contest.type in ['NOIP', 'NOIP提高', 'CSP提高']:
                 n = record.contest.level_counts['一等奖']
                 if record.rank * 2 <= n:
                     l = max(l, 7)
@@ -132,11 +132,13 @@ class OIer:
                     l = max(l, 4)
                 else:
                     l = max(l, 3)
-            elif record.contest.type == 'NOIP普及':
+            elif record.contest.type in ['NOIP普及', 'CSP入门']:
                 if record.level == '一等奖':
                     l = max(l, 5)
                 elif record.level == '二等奖':
                     l = max(l, 4)
+                else:
+                    l = max(l, 3)
             elif B := __clother__.get(record.contest.type, 0):
                 n = record.contest.n_contestants()
                 scores.setdefault(record.contest.type, R(0))
