@@ -84,8 +84,7 @@ def __main__():
                     cur = cur[len(element):]
                     break
             else:
-                raise ValueError(
-                    '未知的年级：\x1b[032m\'{}\'\x1b[0m'.format(grade_name))
+                raise ValueError(f'未知的年级：\x1b[032m\'{grade_name}\'\x1b[0m')
 
     def enrollment_middle(contest, grades):
         ''' 获取初中入学年份列表。
@@ -153,8 +152,7 @@ def __main__():
         '''
 
         if not (1 <= rank <= total):
-            print('\x1b[01;33mwarning: \x1b[0m诡异的排名：\x1b[32m{}\x1b[0m / \x1b[32m{}\x1b[0m (from \x1b[32m{}\x1b[0m)，已自动 clamped'.format(
-                rank, total, name), file = stderr)
+            print(f'\x1b[01;33mwarning: \x1b[0m诡异的排名：\x1b[32m{rank}\x1b[0m / \x1b[32m{total}\x1b[0m (from \x1b[32m{name}\x1b[0m)，已自动 clamped', file=stderr)
         return rc_list[400 * max(min(rank, total), 1) // total]
 
     def contest_type_coefficient(type, name = None):
@@ -167,8 +165,7 @@ def __main__():
         '''
 
         if type not in scoring:
-            print('\x1b[01;33mwarning: \x1b[0m未知的比赛类型：\x1b[32m\'{}\'\x1b[0m (from \x1b[32m{}\x1b[0m)，不计算贡献'.format(
-                type, name), file = stderr)
+            print('\x1b[01;33mwarning: \x1b[0m未知的比赛类型：\x1b[32m\'{type}\'\x1b[0m (from \x1b[32m{name}\x1b[0m)，不计算贡献', file=stderr)
         return D(scoring.get(type, '0'))
 
     def lcs(str1, str2):

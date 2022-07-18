@@ -4,7 +4,6 @@ import gc
 import re
 import util
 from fractions import Fraction as R
-from sys import stderr
 __re_identifier_with_initials__ = re.compile(r'<(\w+)>')
 
 '下列硬编码常量为 CCF 等级计算规则。'
@@ -76,10 +75,10 @@ class OIer:
 
     @staticmethod
     def __float2p_format__(x):
-        return '{:.2f}'.format(x).rstrip('0').rstrip('.').lstrip('0') or '0'
+        return f'{x:.2f}'.rstrip('0').rstrip('.').lstrip('0') or '0'
 
     def __get_compressed_records__(self):
-        return '/'.join(record.to_compress_format() for record in self.records)
+        return '/'.join(record.to_compress_format(self.enroll_middle) for record in self.records)
 
     def to_compress_format(self):
         '转化成压缩格式字符串。'

@@ -2,6 +2,7 @@
 
 from collections import Counter
 from record import Record
+from sys import stderr
 import re
 __re_score_with_rank__ = re.compile(r'^(\d+\.?\d+)\(rk(\d+)\)$')
 
@@ -43,7 +44,7 @@ class Contest:
 
         if name in Contest.__all_contests_map__:
             return Contest.__all_contests_map__[name]
-        raise ValueError('未知的比赛名：\x1b[32m\'{}\'\x1b[0m'.format(name))
+        raise ValueError(f'未知的比赛名：\x1b[32m\'{name}\'\x1b[0m')
 
     @staticmethod
     def count_all():
@@ -100,18 +101,15 @@ class Contest:
             score = float(score)
             if len(self.contestants) == 0:
                 if not (score is None) and score > self.full_score:
-                    print('\x1b[01;33mwarning: \x1b[0m超过满分的分数：\x1b[32m{}\x1b[0m > \x1b[32m{}\x1b[0m，于比赛 \x1b[32m\'{}\'\x1b[0m'.format(
-                        score, self.full_score, self.name))
+                    print(f'\x1b[01;33mwarning: \x1b[0m超过满分的分数：\x1b[32m{score}\x1b[0m > \x1b[32m{self.full_score}\x1b[0m，于比赛 \x1b[32m\'{self.name}\'\x1b[0m', file=stderr)
                 rank = 1
             elif score == self.contestants[-1].score:
                 rank = self.contestants[-1].rank
             else:
                 if (score is None) or (self.contestants[-1].score is None):
-                    print('\x1b[01;33mwarning: \x1b[0m不兼容的分数：\x1b[32m{}\x1b[0m > \x1b[32m{}\x1b[0m，于比赛 \x1b[32m\'{}\'\x1b[0m'.format(
-                        score, self.contestants[-1].score, self.name))
+                    print(f'\x1b[01;33mwarning: \x1b[0m不兼容的分数：\x1b[32m{score}\x1b[0m > \x1b[32m{self.contestants[-1].score}\x1b[0m，于比赛 \x1b[32m\'{self.name}\'\x1b[0m', file=stderr)
                 elif score > self.contestants[-1].score:
-                    print('\x1b[01;33mwarning: \x1b[0m不单调的分数：\x1b[32m{}\x1b[0m > \x1b[32m{}\x1b[0m，于比赛 \x1b[32m\'{}\'\x1b[0m'.format(
-                        score, self.contestants[-1].score, self.name))
+                    print(f'\x1b[01;33mwarning: \x1b[0m不单调的分数：\x1b[32m{score}\x1b[0m > \x1b[32m{self.contestants[-1].score}\x1b[0m，于比赛 \x1b[32m\'{self.name}\'\x1b[0m', file=stderr)
                 rank = len(self.contestants) + 1
 
         record = Record(oier, self, score, rank, level,

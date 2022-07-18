@@ -49,7 +49,7 @@ class School:
 
         if name in School.__school_name_map__:
             return School.__school_name_map__[name]
-        raise ValueError('未知的学校名：\x1b[32m\'{}\'\x1b[0m'.format(name))
+        raise ValueError(f'未知的学校名：\x1b[32m\'{name}\'\x1b[0m')
 
     @staticmethod
     def find_candidate(name, province):

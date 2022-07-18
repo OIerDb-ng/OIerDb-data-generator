@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
 from itertools import chain
+from sys import stderr
 import util
 __school_penalty__ = {0: 0, 1: -40, 2: 60, 3: 120, 4: 180, 5: 300}
+
 
 class Record:
     __auto_increment__ = 0
@@ -23,19 +25,18 @@ class Record:
         self.keep_grade_flag = False
 
     def __repr__(self):
-        return '{}(pro={},school={},ems={},c={})'.format(self.oier.name, self.province, self.school.name, self.ems, self.contest.name)
+        return f'{self.oier.name}(pro={self.province},school={self.school.name},ems={self.ems},c={self.contest.name})'
 
     @staticmethod
     def __score_format__(score):
-        return '' if score is None else '{:.5g}'.format(score)
+        return '' if score is None else f'{score:.5g}'
 
     @staticmethod
     def __province_format__(province):
         try:
             return util.provinces.index(province)
         except:
-            print('\x1b[01;33mwarning: \x1b[0m未知的省级行政区：\x1b[0;32m\'{}\'\x1b[0m'.format(
-                province), file = stderr)
+            print(f'\x1b[01;33mwarning: \x1b[0m未知的省级行政区：\x1b[0;32m\'{province}\'\x1b[0m', file=stderr)
             return province
 
     @staticmethod
@@ -43,11 +44,10 @@ class Record:
         try:
             return util.award_levels.index(level)
         except:
-            print('\x1b[01;33mwarning: \x1b[0m未知的奖项名称：\x1b[0;32m\'{}\'\x1b[0m'.format(
-                level), file = stderr)
+            print(f'\x1b[01;33mwarning: \x1b[0m未知的奖项名称：\x1b[0;32m\'{level}\'\x1b[0m', file=stderr)
             return level
 
-    def to_compress_format(self):
+    def to_compress_format(self, reference_em):
         '转化成压缩格式字符串。'
 
         s = '{}:{}:{}:{}:{}:{}'.format(
@@ -55,6 +55,8 @@ class Record:
             self.rank, Record.__province_format__(self.province), Record.__award_level_format__(self.level)
         )
         if self.keep_grade_flag:
+            s += ';' + str(util.get_weighted_mode([self.ems])[0])
+        elif reference_em not in self.ems:
             s += ':' + str(util.get_weighted_mode([self.ems])[0])
         return s
 

@@ -9,6 +9,7 @@ from oier import OIer
 from record import Record
 from school import School
 from sys import argv, stderr
+from tqdm import tqdm
 
 
 def __main__():
@@ -34,12 +35,11 @@ def __main__():
 
         with open('data/school.txt') as f:
             raw_data = f.readlines()
-        for idx, line in enumerate(raw_data):
+        for idx, line in tqdm(enumerate(raw_data), total=len(raw_data)):
             try:
                 parse_school_line(line.strip())
             except ValueError as e:
-                print('\x1b[01mschool.txt:{}: \x1b[031merror: \x1b[0;37m\'{}\'\x1b[0m，{}'.format(
-                    idx + 1, line.strip(), e), file = stderr)
+                print(f'\x1b[01mschool.txt:{idx + 1}: \x1b[031merror: \x1b[0;37m\'{line.strip()}\'\x1b[0m，{e}', file=stderr)
 
     def parse_raw_line(line):
         '''解析 raw.txt 文件的一行。
@@ -66,7 +66,7 @@ def __main__():
         grades = util.get_grades(grade_name)
         gender = gender_map.get(gender_name, 0)
         if not Contest.is_score_valid(score):
-            raise ValueError('无法识别的分数：\x1b[032m\'{}\'\x1b[0m'.format(score))
+            raise ValueError(f'无法识别的分数：\x1b[032m\'{score}\'\x1b[0m')
         # 开始创建数据
         oier = OIer.of(name, identifier)
         record = contest.add_contestant(
@@ -78,12 +78,11 @@ def __main__():
 
         with open('data/raw.txt') as f:
             raw_data = f.readlines()
-        for idx, line in enumerate(raw_data):
+        for idx, line in tqdm(enumerate(raw_data), total=len(raw_data)):
             try:
                 parse_raw_line(line.strip())
             except ValueError as e:
-                print('\x1b[01mraw.txt:{}: \x1b[31merror: \x1b[0;37m\'{}\'\x1b[0m，{}'.format(
-                    idx + 1, line.strip(), e), file = stderr)
+                print(f'\x1b[01mraw.txt:{idx + 1}: \x1b[31merror: \x1b[0;37m\'{line.strip()}\'\x1b[0m，{e}', file=stderr)
 
     def attempt_merge(threshold = 240):
         ''' 尝试合并信息。
@@ -93,9 +92,8 @@ def __main__():
 
         recordseqs = []
         length = OIer.count_all()
-        for idx, oier in enumerate(OIer.get_all()):
-            if idx % 1000 == 0:
-                print('\r\x1b[2K{}% ...'.format(idx * 100 // length), end='')
+        for idx, oier in tqdm(enumerate(OIer.get_all()), total=OIer.count_all()):
+            # tqdm
             # 手动合并的无需拆分
             if oier.identifier:
                 recordseqs.append(oier.records)
@@ -123,11 +121,10 @@ def __main__():
                 else:
                     break
             if '--show-incomplete-merge' in argv and len(a) != 1:
-                print('\x1b[01;33mwarning: \x1b[0;32m\'{}\'\x1b[0m 未完全合并，合并进度为 \x1b[32m{}\x1b[0m → \x1b[32m{}\x1b[0m'.format(
-                    oier.name, original_length, len(a)), file = stderr)
+                print(f'\x1b[01;33mwarning: \x1b[0;32m\'{oier.name}\'\x1b[0m 未完全合并，合并进度为 \x1b[32m{original_length}\x1b[0m → \x1b[32m{len(a)}\x1b[0m', file=stderr)
             recordseqs.extend(a)
         OIer.clear()
-        for recordseq in recordseqs:
+        for recordseq in tqdm(recordseqs):
             original = recordseq[0].oier
             # UID 定为该 OIer 首次出现的<b>有效</b>行号
             uid = min(recordseq, key = lambda record: record.id).id
@@ -140,12 +137,11 @@ def __main__():
             oier.records = recordseq[:]
             for record in oier.records:
                 record.oier = oier
-        print()
 
     def analyze_individual_oier():
         '分析各体信息。'
 
-        for oier in OIer.get_all():
+        for oier in tqdm(OIer.get_all()):
             oier.compute_ccf_level()
             oier.compute_oierdb_score()
 
@@ -160,38 +156,33 @@ def __main__():
         #   b,<name>,<origin>，表示将新名称 <name> 合并到 <origin>，将名称作为别名。
         #   f,<name>,<origin>，表示将新名称 <name> 合并到 <origin>，并将新名称设为正式名称。
         #   c,<province>,<city>,<name>，表示插入学校 <province>,<city>,<name>。''', file = f)
-            for province, school_name in new_schools:
+            for province, school_name in tqdm(new_schools):
                 res = School.find_candidate(school_name, province)
                 method = res[0]
                 if method == 'b':
                     school = res[1]
-                    print('\x1b[32m[direct redirect]\x1b[0m: \x1b[35m\'{}\'\x1b[0m → \x1b[37m\'{}\'\x1b[0m'.format(
-                        school_name, school.name))
-                    print('b {} {}'.format(school_name, school.name), file = f)
+                    print(f'\x1b[32m[direct redirect]\x1b[0m: \x1b[35m\'{school_name}\'\x1b[0m → \x1b[37m\'{school.name}\'\x1b[0m', file=stderr)
+                    print(f'b {school_name} {school.name}', file = f)
                 elif method == 'f':
                     school = res[1]
-                    print('\x1b[32m[name changed]\x1b[0m: \x1b[35m\'{}\'\x1b[0m ← \x1b[37m\'{}\'\x1b[0m'.format(
-                        school_name, school.name))
-                    print('f {} {}'.format(school_name, school.name), file = f)
+                    print(f'\x1b[32m[name changed]\x1b[0m: \x1b[35m\'{school_name}\'\x1b[0m ← \x1b[37m\'{school.name}\'\x1b[0m', file=stderr)
+                    print(f'f {school_name} {school.name}', file = f)
                 elif method == 'fs':
                     school = res[1]
                     standard = res[2]
-                    print('\x1b[32m[towards standard name]\x1b[0m: (\x1b[35m\'{}\'\x1b[0m, \x1b[37m\'{}\'\x1b[0m) → \x1b[33m\'{}\'\x1b[0m'.format(
-                        school_name, school.name, standard))
-                    print('f {} {}'.format(standard, school.name), file = f)
-                    print('b {} {}'.format(school_name, school.name), file = f)
+                    print(f'\x1b[32m[towards standard name]\x1b[0m: (\x1b[35m\'{school_name}\'\x1b[0m, \x1b[37m\'{school.name}\'\x1b[0m) → \x1b[33m\'{standard}\'\x1b[0m', file=stderr)
+                    print(f'f {standard} {school.name}', file=f)
+                    print(f'b {school_name} {school.name}', file=f)
                 elif method == 'c':
                     city = res[1]
-                    print('\x1b[32m[create]\x1b[0m: (\x1b[35m\'{}\'\x1b[0m, \x1b[35m\'{}\'\x1b[0m, \x1b[35m\'{}\'\x1b[0m)'.format(
-                        province, city, school_name))
-                    print('c {} {} {}'.format(
-                        province, city, school_name), file = f)
+                    print(f'\x1b[32m[create]\x1b[0m: (\x1b[35m\'{province}\'\x1b[0m, \x1b[35m\'{city}\'\x1b[0m, \x1b[35m\'{school_name}\'\x1b[0m)', file=stderr)
+                    print(f'c {province} {city} {school_name}', file=f)
 
     def output_schools():
         '输出学校信息。'
 
         output = []
-        for school in School.get_all():
+        for school in tqdm(School.get_all()):
             output.append([school.name, school.province,
                           school.city, float(round(school.score, 2))])
         with open('dist/school.json', 'w') as f:
@@ -202,7 +193,7 @@ def __main__():
 
         OIer.sort_by_score()
         with open('dist/result.txt', 'w') as f:
-            for oier in OIer.get_all():
+            for oier in tqdm(OIer.get_all()):
                 print(oier.to_compress_format(), file = f)
 
     def compute_sha512():
@@ -229,7 +220,7 @@ def __main__():
     def report_status(message):
         '向终端报告当前进度。'
 
-        print('================ {} ================'.format(message), file=stderr)
+        print(f'================ {message} ================', file=stderr)
 
     report_status('读取学校信息中')
     parse_school()
