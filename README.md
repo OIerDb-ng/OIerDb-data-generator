@@ -7,7 +7,7 @@
 请先安装 Python 3，然后安装依赖：
 
 ```bash
-pip install pypinyin requests
+pip install pypinyin requests tqdm
 ```
 
 生成数据：

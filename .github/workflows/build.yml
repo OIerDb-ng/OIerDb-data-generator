@@ -24,7 +24,7 @@ jobs:
       - name: Install Dependencies (Python)
         run: |
           python -m pip install --upgrade pip
-          pip install pypinyin requests
+          pip install pypinyin requests tqdm
       - name: Build
         run: python main.py
       - name: Deploy to GitHub Pages
