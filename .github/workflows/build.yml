@@ -27,6 +27,16 @@ jobs:
           pip install pypinyin requests tqdm
       - name: Build
         run: python main.py
+      - name: Rename Files
+        run: |
+          STATIC_SHA512=$(jq -r .sha512 dist/static.sha512.json)
+          RESULT_SHA512=$(jq -r .sha512 dist/result.sha512.json)
+
+          mv dist/static.json dist/static.${STATIC_SHA512:0:7}.json
+          mv dist/result.txt  dist/result.${RESULT_SHA512:0:7}.txt
+
+          ln -s static.${STATIC_SHA512:0:7}.json dist/static.json
+          ln -s result.${RESULT_SHA512:0:7}.txt  dist/result.txt
       - name: Deploy to GitHub Pages
         if: ${{ github.event_name == 'push' && github.repository_owner == 'oierdb-ng' }}
         uses: peaceiris/actions-gh-pages@v3
@@ -68,13 +78,11 @@ jobs:
           STATIC_SHA512=$(jq -r .sha512 static.sha512.json)
           RESULT_SHA512=$(jq -r .sha512 result.sha512.json)
 
-          echo static.json $STATIC_SHA512
-          echo result.txt $RESULT_SHA512
-
           rm -rf cdn-sb/public/oier
           mkdir -p cdn-sb/public/oier
-          cp static.json cdn-sb/public/oier/static.${STATIC_SHA512:0:7}.json
-          cp result.txt cdn-sb/public/oier/result.${RESULT_SHA512:0:7}.txt
+
+          cp static.${STATIC_SHA512:0:7}.json cdn-sb/public/oier/static.${STATIC_SHA512:0:7}.json
+          cp result.${RESULT_SHA512:0:7}.txt  cdn-sb/public/oier/result.${RESULT_SHA512:0:7}.txt
       - id: get-commit-sha
         run: |
           id="${{ github.sha }}"
