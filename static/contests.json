@@ -675,5 +675,13 @@
 		"name": "APIO2022线上",
 		"type": "APIO",
 		"year": 2022
+	},
+	{
+		"capacity": 357,
+		"fall_semester": false,
+		"full_score": 600,
+		"name": "IOI2022",
+		"type": "IOI",
+		"year": 2022
 	}
 ]
