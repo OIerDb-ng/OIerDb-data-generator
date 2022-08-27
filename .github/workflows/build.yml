@@ -45,7 +45,6 @@ jobs:
           publish_dir: dist
           user_name: BaoshuoBot
           user_email: bot@baoshuo.ren
-          cname: oier-data.baoshuo.dev
       - name: Deploy to server
         uses: easingthemes/ssh-deploy@v2.1.5
         env:
