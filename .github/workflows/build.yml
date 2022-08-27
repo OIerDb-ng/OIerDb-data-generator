@@ -29,11 +29,14 @@ jobs:
         run: python main.py
       - name: Rename Files
         run: |
-          STATIC_SHA512=$(jq -r .sha512 dist/static.sha512.json)
-          RESULT_SHA512=$(jq -r .sha512 dist/result.sha512.json)
+          STATIC_SHA512=$(jq -r .sha512 dist/static.info.json)
+          RESULT_SHA512=$(jq -r .sha512 dist/result.info.json)
 
           mv dist/static.json dist/static.${STATIC_SHA512:0:7}.json
           mv dist/result.txt  dist/result.${RESULT_SHA512:0:7}.txt
+
+          ln -s static.info.json dist/static.sha512.json
+          ln -s result.info.json dist/result.sha512.json
 
           ln -s static.${STATIC_SHA512:0:7}.json dist/static.json
           ln -s result.${RESULT_SHA512:0:7}.txt  dist/result.txt
@@ -48,7 +51,7 @@ jobs:
       - name: Deploy to server
         uses: easingthemes/ssh-deploy@v2.1.5
         env:
-          ARGS: '-avz --delete'
+          ARGS: "-avz --delete"
           SOURCE: dist/
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
@@ -72,10 +75,10 @@ jobs:
           repository: renbaoshuo/cdn-sb
           ssh-key: ${{ secrets.CDN_SB_SSH_PRIVATE_KEY }}
           path: cdn-sb
-      - name: Rename Files
+      - name: Copy Files
         run: |
-          STATIC_SHA512=$(jq -r .sha512 static.sha512.json)
-          RESULT_SHA512=$(jq -r .sha512 result.sha512.json)
+          STATIC_SHA512=$(jq -r .sha512 static.info.json)
+          RESULT_SHA512=$(jq -r .sha512 result.info.json)
 
           rm -rf cdn-sb/public/oier
           mkdir -p cdn-sb/public/oier

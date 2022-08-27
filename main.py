@@ -206,11 +206,7 @@ def __main__():
 
         with open('dist/result.txt', 'rb') as f:
             sha512 = hashlib.sha512(f.read()).hexdigest()
-        with open('dist/result.sha512.js', 'w') as f:
-            print('OIerDb.upstream_sha512 = \'' + sha512 + '\';', file=f)
-        with open('dist/result.sha512.mjs', 'w') as f:
-            print('export const upstream_sha512 = \'' + sha512 + '\';', file=f)
-        with open('dist/result.sha512.json', 'w') as f:
+        with open('dist/result.info.json', 'w') as f:
             print('{"sha512":"' + sha512 + '", "size":' + str(file_size) + '}', file=f)
 
     def update_static():
