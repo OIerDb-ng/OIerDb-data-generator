@@ -88,7 +88,7 @@ jobs:
       - id: get-commit-sha
         run: |
           id="${{ github.sha }}"
-          echo "::set-output name=id::${id:0:7}"
+          echo "id=${id:0:7}" >> $GITHUB_OUTPUT
       - name: Upload
         run: |
           cd cdn-sb
