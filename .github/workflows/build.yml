@@ -10,15 +10,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 14
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: 3.x
       - name: Install Dependencies (Python)
@@ -49,7 +49,7 @@ jobs:
           user_name: BaoshuoBot
           user_email: bot@baoshuo.ren
       - name: Deploy to server
-        uses: easingthemes/ssh-deploy@v2.1.5
+        uses: easingthemes/ssh-deploy@v3
         env:
           ARGS: "-avz --delete"
           SOURCE: dist/
