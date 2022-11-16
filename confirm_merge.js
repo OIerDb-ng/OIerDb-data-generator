@@ -22,14 +22,14 @@ for (let line of data) {
         case 'b': {
             let [name, origin] = data;
             let idx = hash[origin];
-            console.assert(idx != null);
+            console.assert(idx != null, line);
             schools[idx] += `,${name}`;
             break;
         }
         case 'f': {
             let [name, origin] = data;
             let idx = hash[origin];
-            console.assert(idx != null);
+            console.assert(idx != null, line);
             let segments = schools[idx].split(',');
             segments.splice(2, 0, name);
             schools[idx] = segments.join(',');
