@@ -49,7 +49,7 @@ jobs:
           user_name: BaoshuoBot
           user_email: bot@baoshuo.ren
       - name: Deploy to server
-        uses: easingthemes/ssh-deploy@v3
+        uses: easingthemes/ssh-deploy@v3.0.1
         env:
           ARGS: "-avz --delete"
           SOURCE: dist/
