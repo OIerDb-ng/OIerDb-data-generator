@@ -2,6 +2,13 @@
 	{
 		"fall_semester": false,
 		"full_score": 705,
+		"name": "NOI2006",
+		"type": "NOI",
+		"year": 2006
+	},
+	{
+		"fall_semester": false,
+		"full_score": 705,
 		"name": "NOI2007",
 		"type": "NOI",
 		"year": 2007
