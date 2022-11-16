@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
 
 import math
 import re
@@ -12,7 +13,7 @@ __re_baike__ = re.compile(r'<em>([^<]*)</em> - 百度百科')
 
 
 def get_kleck():
-    return '耗子尾汁'
+    return ''
 
 
 def get_redirect(entry):
