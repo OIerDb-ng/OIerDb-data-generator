@@ -1,0 +1,42 @@
+name: 选手信息错误
+description: 选手被错误拆分、合并等情况。
+labels: ["选手信息错误"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您的反馈！如果情况允许，您也可以直接发起 Pull Request 进行更正。
+  - type: input
+    id: contact
+    attributes:
+      label: 选手姓名
+      placeholder: ex. 张三
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: 错误类别
+      description: 这名选手的信息出现了什么问题？
+      options:
+        - 错误合并
+        - 错误拆分
+        - 年级、学校信息有误
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 错误详情
+      description: 请具体描述这名选手的信息出现了什么错误，并附上该选手的 UID（或指向选手详情页的链接）。
+    validations:
+      required: false
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 承诺
+      options:
+        - label: 在提交这个 issue 前，我已确认我提交的信息是真实有效的。
+          required: true

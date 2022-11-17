@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 网站功能相关问题
+    url: https://github.com/OIerDb-ng/OIerDb/issues/new/choose
+    about: 数据无关的问题请移步 OIerDb-ng/OIerDb 仓库。
