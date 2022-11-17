@@ -732,5 +732,19 @@
 		"name": "NOI2022D类",
 		"type": "NOID类",
 		"year": 2022
+	},
+	{
+		"fall_semester": true,
+		"full_score": 400,
+		"name": "CSP2022提高",
+		"type": "CSP提高",
+		"year": 2022
+	},
+	{
+		"fall_semester": true,
+		"full_score": 400,
+		"name": "CSP2022入门",
+		"type": "CSP入门",
+		"year": 2022
 	}
 ]
