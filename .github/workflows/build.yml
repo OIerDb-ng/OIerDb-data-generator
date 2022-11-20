@@ -52,6 +52,7 @@ jobs:
           user_name: BaoshuoBot
           user_email: bot@baoshuo.ren
       - name: Deploy to server
+        if: ${{ github.event_name == 'push' && github.repository_owner == 'oierdb-ng' }}
         uses: easingthemes/ssh-deploy@v3.0.1
         env:
           ARGS: "-avz --delete"
