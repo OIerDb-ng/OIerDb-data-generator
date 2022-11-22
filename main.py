@@ -17,7 +17,7 @@ def __main__():
     gender_map = {'男': 1, '女': -1}
     new_schools = []
 
-    def parse_school_line(line, idx = -1):
+    def parse_school_line(line):
         '''解析 school.txt 文件的一行。
 
         line: 一行。
@@ -29,7 +29,7 @@ def __main__():
         if len(li) < 3:
             raise ValueError('格式错误')
         province, city, name, *aliases = li
-        School.create(idx + 1, name, province, city, aliases)
+        School.create(name, province, city, aliases)
 
     def parse_school():
         '解析 school.txt 文件。'

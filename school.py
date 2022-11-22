@@ -20,17 +20,17 @@ class School:
         self.score = util.D(0)
 
     @staticmethod
-    def create(id, name, province, city, aliases):
+    def create(name, province, city, aliases):
         ''' 新建学校。
 
-        id: 学校 ID。
         name: 正式名称。
         province: 省份。
         city: 城市（或区）。
         aliases: 别名列表（可以为空）。
         '''
 
-        school = School(id, name, province, city, aliases)
+        idx = School.count_all()
+        school = School(idx, name, province, city, aliases)
         School.__all_school_list__.append(school)
         School.__school_name_map__[name] = school
         for alias in aliases:
