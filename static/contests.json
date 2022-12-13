@@ -746,5 +746,12 @@
 		"name": "CSP2022入门",
 		"type": "CSP入门",
 		"year": 2022
+	},
+	{
+		"fall_semester": true,
+		"full_score": 400,
+		"name": "NOIP2022",
+		"type": "NOIP",
+		"year": 2022
 	}
 ]
