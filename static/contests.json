@@ -753,5 +753,12 @@
 		"name": "NOIP2022",
 		"type": "NOIP",
 		"year": 2022
+	},
+	{
+		"fall_semester": false,
+		"full_score": 300,
+		"name": "WC2023",
+		"type": "WC",
+		"year": 2023
 	}
 ]
