@@ -760,5 +760,12 @@
 		"name": "WC2023",
 		"type": "WC",
 		"year": 2023
+	},
+	{
+		"fall_semester": false,
+		"full_score": 400,
+		"name": "NOIST2023",
+		"type": "NOIST",
+		"year": 2023
 	}
 ]
