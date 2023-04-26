@@ -30,7 +30,7 @@ body:
     id: what-happened
     attributes:
       label: 错误详情
-      description: 请具体描述这名选手的信息出现了什么错误，并附上该选手的 UID（或指向选手详情页的链接）。
+      description: 请具体描述这名选手的信息出现了什么错误，并附上有助于识别该选手的信息（如省份、就读学校列表、年级等，UID 在某些情况下可能会发生变化）。
     validations:
       required: false
   - type: checkboxes
