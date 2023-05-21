@@ -767,5 +767,12 @@
 		"name": "春季测试2023",
 		"type": "NOIST",
 		"year": 2023
+	},
+	{
+		"fall_semester": false,
+		"full_score": 600,
+		"name": "NGOI2023",
+		"type": "NGOI",
+		"year": 2023
 	}
 ]
