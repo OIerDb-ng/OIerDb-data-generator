@@ -788,5 +788,19 @@
 		"name": "APIO2023线上",
 		"type": "APIO",
 		"year": 2023
+	},
+	{
+		"fall_semester": false,
+		"full_score": 705,
+		"name": "NOI2023",
+		"type": "NOI",
+		"year": 2023
+	},
+	{
+		"fall_semester": false,
+		"full_score": 705,
+		"name": "NOI2023D类",
+		"type": "NOID类",
+		"year": 2023
 	}
 ]
