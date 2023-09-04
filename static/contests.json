@@ -802,5 +802,13 @@
 		"name": "NOI2023D类",
 		"type": "NOID类",
 		"year": 2023
+	},
+	{
+		"capacity": 354,
+		"fall_semester": false,
+		"full_score": 600,
+		"name": "IOI2023",
+		"type": "IOI",
+		"year": 2023
 	}
 ]
