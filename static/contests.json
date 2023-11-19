@@ -810,5 +810,19 @@
 		"name": "IOI2023",
 		"type": "IOI",
 		"year": 2023
+	},
+	{
+		"fall_semester": true,
+		"full_score": 400,
+		"name": "CSP2023提高",
+		"type": "CSP提高",
+		"year": 2023
+	},
+	{
+		"fall_semester": true,
+		"full_score": 400,
+		"name": "CSP2023入门",
+		"type": "CSP入门",
+		"year": 2023
 	}
 ]
