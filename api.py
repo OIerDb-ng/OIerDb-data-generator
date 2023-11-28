@@ -13,19 +13,23 @@ __re_baike__ = re.compile(r'<em>([^<]*)</em> - 百度百科')
 
 
 def get_kleck():
-    return ''
+    return '44532ce5c360b99a05333a761ab975ba'
 
 
 def get_redirect(entry):
+    import sys
+    print('REQUEST =', entry, file=sys.stderr)
     res = requests.get('https://baike.baidu.com/item/' +
                        entry, headers = __headers__)
     res.encoding = 'utf8'
     if match := re.search(__re_title__, res.text):
         return match.group(1)
     else:
+        print('REQUEST2 =', entry, file=sys.stderr)
         res = requests.get('http://www.baidu.com/s?wd=' + entry,
                            headers = __headers__, cookies = {'kleck': get_kleck()})
         res.encoding = 'utf8'
+        print('RES TEXT =', res.text)
         if match := re.search(__re_baike__, res.text):
             return match.group(1)
     return None
@@ -39,9 +43,9 @@ def __normalize__(address_norm):
 
 
 def get_location(entry, province=''):
-    res = requests.get('https://map.baidu.com/?qt=s&wd=' + entry)
-    res.encoding = 'utf8'
     try:
+        res = requests.get('https://map.baidu.com/?qt=s&wd=' + entry)
+        res.encoding = 'utf8'
         locs = res.json()
         for loc in locs['content']:
             ret = __normalize__(loc['address_norm'])
