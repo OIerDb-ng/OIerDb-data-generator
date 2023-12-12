@@ -824,5 +824,12 @@
 		"name": "CSP2023入门",
 		"type": "CSP入门",
 		"year": 2023
+	},
+	{
+		"fall_semester": true,
+		"full_score": 400,
+		"name": "NOIP2023",
+		"type": "NOIP",
+		"year": 2023
 	}
 ]
