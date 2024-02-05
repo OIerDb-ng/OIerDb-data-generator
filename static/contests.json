@@ -838,5 +838,12 @@
 		"name": "NGOI2024",
 		"type": "NGOI",
 		"year": 2023
+	},
+	{
+		"fall_semester": false,
+		"full_score": 300,
+		"name": "WC2024",
+		"type": "WC",
+		"year": 2024
 	}
 ]
