@@ -42,7 +42,7 @@ def __main__():
             except ValueError as e:
                 print(f'\x1b[01mschool.txt:{idx + 1}: \x1b[031merror: \x1b[0;37m\'{line.strip()}\'\x1b[0m，{e}', file=stderr)
 
-    def parse_raw_line(line):
+    def parse_raw_line(line, idx):
         '''解析 raw.txt 文件的一行。
 
         line: 一行。
@@ -71,7 +71,7 @@ def __main__():
         # 开始创建数据
         oier = OIer.of(name, identifier)
         record = contest.add_contestant(
-            oier, score, level, grades, school, province, gender)
+            oier, score, level, grades, school, province, gender, idx)
         oier.add_record(record)
 
     def parse_raw():
@@ -81,7 +81,7 @@ def __main__():
             raw_data = f.readlines()
         for idx, line in tqdm(enumerate(raw_data), total=len(raw_data)):
             try:
-                parse_raw_line(line.strip())
+                parse_raw_line(line.strip(), idx)
             except ValueError as e:
                 print(f'\x1b[01mraw.txt:{idx + 1}: \x1b[31merror: \x1b[0;37m\'{line.strip()}\'\x1b[0m，{e}', file=stderr)
 
@@ -197,6 +197,13 @@ def __main__():
             for oier in tqdm(OIer.get_all()):
                 print(oier.to_compress_format(), file = f)
 
+    def output_oier_txt():
+        '生成 oier.txt'
+        with open('dist/oier.txt', 'w') as f:
+            print('# 姓名,性别,拼音缩写,获奖记录ID1,获奖记录ID2,获奖记录ID3,...', file = f)
+            for oier in tqdm(OIer.get_all()):
+                print(oier.to_oier_data_format(), file = f)
+
     def compute_sha512():
         '''
         计算 dist/result.txt 的 SHA512 值，保存在 sha512/result 中。
@@ -234,6 +241,10 @@ def __main__():
     if '--merge-schools' in argv:
         report_status('尝试合并学校中')
         merge_schools()
+
+    if '--output-oier' in argv:
+        report_status('生成 oier.txt 中')
+        output_oier_txt()
 
     report_status('输出到 dist/result.txt 中')
     output_compressed()

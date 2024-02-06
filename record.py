@@ -10,7 +10,7 @@ __school_penalty__ = {0: 0, 1: -40, 2: 60, 3: 120, 4: 180, 5: 300}
 class Record:
     __auto_increment__ = 0
 
-    def __init__(self, oier, contest, score, rank, level, grades, school, province, gender):
+    def __init__(self, oier, contest, score, rank, level, grades, school, province, gender, raw_idx):
         Record.__auto_increment__ += 1
         self.id = Record.__auto_increment__
         self.oier = oier
@@ -24,6 +24,7 @@ class Record:
         self.gender = gender
         self.ems = util.enrollment_middle(contest, grades)
         self.keep_grade_flag = False
+        self.raw_idx = raw_idx
 
     def __repr__(self):
         return f'{self.oier.name}(pro={self.province},school={self.school.name},ems={self.ems},c={self.contest.name})'
