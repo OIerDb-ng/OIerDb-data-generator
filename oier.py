@@ -75,6 +75,12 @@ class OIer:
         OIer.__all_oiers_list__.sort(key = lambda oier: (-oier.oierdb_score, oier.uid))
 
     @staticmethod
+    def sort_by_uid():
+        '根据 UID 对 OIer 排序。'
+
+        OIer.__all_oiers_list__.sort(key = lambda oier: oier.uid)
+
+    @staticmethod
     def __float2p_format__(x):
         return f'{x:.2f}'.rstrip('0').rstrip('.').lstrip('0') or '0'
 

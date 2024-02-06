@@ -199,7 +199,9 @@ def __main__():
 
     def output_oier_txt():
         '生成 oier.txt'
-        with open('dist/oier.txt', 'w') as f:
+
+        OIer.sort_by_uid()
+        with open('data/oier.txt', 'w') as f:
             print('# 姓名,性别,拼音缩写,获奖记录ID1,获奖记录ID2,获奖记录ID3,...', file = f)
             for oier in tqdm(OIer.get_all()):
                 print(oier.to_oier_data_format(), file = f)
