@@ -82,7 +82,7 @@ class Contest:
 
         return self.capacity if self.capacity else len(self.contestants)
 
-    def add_contestant(self, oier, score, level, grades, school, province, gender):
+    def add_contestant(self, oier, score, level, grades, school, province, gender, raw_idx):
         ''' 添加一名选手到比赛。
 
         oier: 选手。
@@ -114,7 +114,7 @@ class Contest:
                 rank = len(self.contestants) + 1
 
         record = Record(oier, self, score, rank, level,
-                        grades, school, province, gender)
+                        grades, school, province, gender, raw_idx)
         self.contestants.append(record)
         self.level_counts[level] += 1
         return record
