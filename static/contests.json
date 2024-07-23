@@ -852,5 +852,19 @@
 		"name": "APIO2024",
 		"type": "APIO",
 		"year": 2024
+	},
+	{
+		"fall_semester": false,
+		"full_score": 705,
+		"name": "NOI2024",
+		"type": "NOI",
+		"year": 2024
+	},
+	{
+		"fall_semester": false,
+		"full_score": 705,
+		"name": "NOI2024D类",
+		"type": "NOID类",
+		"year": 2024
 	}
 ]
