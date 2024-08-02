@@ -5,7 +5,7 @@ import math
 import re
 import requests
 
-__headers__ = {'Connection': 'close', 'User-Agent': ''}
+__headers__ = {'Connection': 'close', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
 __re_title__ = re.compile(r'<title>([^<]*)_百度百科</title>')
 __re_norm__ = re.compile(
     r'\[([^(]*)\([^)]*\)\|\w+\|[^\]]*\]\[([^(]*)\([^)]*\)\|\w+\|[^\]]*\]')
@@ -13,7 +13,7 @@ __re_baike__ = re.compile(r'<em>([^<]*)</em> - 百度百科')
 
 
 def get_kleck():
-    return '44532ce5c360b99a05333a761ab975ba'
+    return ''
 
 
 def get_redirect(entry):
