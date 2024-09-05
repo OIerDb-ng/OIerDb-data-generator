@@ -598,7 +598,7 @@
 		"year": 2020
 	},
 	{
-		"capacity": 342,
+		"capacity": 343,
 		"fall_semester": false,
 		"full_score": 600,
 		"name": "IOI2020",
@@ -712,7 +712,7 @@
 		"year": 2022
 	},
 	{
-		"capacity": 357,
+		"capacity": 349,
 		"fall_semester": false,
 		"full_score": 600,
 		"name": "IOI2022",
@@ -804,7 +804,7 @@
 		"year": 2023
 	},
 	{
-		"capacity": 354,
+		"capacity": 350,
 		"fall_semester": false,
 		"full_score": 600,
 		"name": "IOI2023",
@@ -868,7 +868,7 @@
 		"year": 2024
 	},
 	{
-		"capacity": 370,
+		"capacity": 353,
 		"fall_semester": false,
 		"full_score": 600,
 		"name": "IOI2024",
