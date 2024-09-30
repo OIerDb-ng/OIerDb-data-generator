@@ -75,11 +75,20 @@ class OIer:
         OIer.__all_oiers_list__.sort(key = lambda oier: (-oier.oierdb_score, oier.uid))
 
     @staticmethod
+    def sort_by_uid():
+        '根据 UID 对 OIer 排序。'
+
+        OIer.__all_oiers_list__.sort(key = lambda oier: oier.uid)
+
+    @staticmethod
     def __float2p_format__(x):
         return f'{x:.2f}'.rstrip('0').rstrip('.').lstrip('0') or '0'
 
     def __get_compressed_records__(self):
         return '/'.join(record.to_compress_format(self.enroll_middle) for record in self.records)
+
+    def __get_record_ids__(self):
+        return ','.join(sorted((str(record.raw_idx) for record in self.records), key = lambda x: int(x)))
 
     def to_compress_format(self):
         '转化成压缩格式字符串。'
@@ -89,6 +98,16 @@ class OIer:
             OIer.__float2p_format__(self.oierdb_score),
             OIer.__float2p_format__(float(self.ccf_score)),
             self.ccf_level, self.__get_compressed_records__()
+        )
+    
+    def to_oier_data_format(self):
+        '转化成 oier.txt 中的数据格式'
+
+        return '{},{},{},{}'.format(
+            self.name,
+            self.gender,
+            self.initials,
+            self.__get_record_ids__()
         )
 
     def add_record(self, record):
