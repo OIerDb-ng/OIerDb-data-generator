@@ -543,7 +543,7 @@
 	{
 		"fall_semester": false,
 		"full_score": 705,
-		"name": "NOI2019D类",
+		"name": "NOI2019夏令营",
 		"type": "NOID类",
 		"year": 2019
 	},
@@ -658,7 +658,7 @@
 	{
 		"fall_semester": false,
 		"full_score": 705,
-		"name": "NOI2021D类",
+		"name": "NOI2021夏令营",
 		"type": "NOID类",
 		"year": 2021
 	},
@@ -729,7 +729,7 @@
 	{
 		"fall_semester": false,
 		"full_score": 705,
-		"name": "NOI2022D类",
+		"name": "NOI2022夏令营",
 		"type": "NOID类",
 		"year": 2022
 	},
@@ -799,7 +799,7 @@
 	{
 		"fall_semester": false,
 		"full_score": 705,
-		"name": "NOI2023D类",
+		"name": "NOI2023夏令营",
 		"type": "NOID类",
 		"year": 2023
 	},
@@ -863,7 +863,7 @@
 	{
 		"fall_semester": false,
 		"full_score": 705,
-		"name": "NOI2024D类",
+		"name": "NOI2024夏令营",
 		"type": "NOID类",
 		"year": 2024
 	},
