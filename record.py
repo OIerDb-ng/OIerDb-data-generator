@@ -81,6 +81,14 @@ class Record:
 
         assert len(A) and len(B)
 
+        # 年份差异过大，视作不同的记录组
+        # - 10 年以上的默认拆分，如有特例手动合并即可
+        # - 显然在可以预见的将来，特例的情况比错误合并的情况会少得多
+        min_year = min(record.contest.year for record in chain(A, B))
+        max_year = max(record.contest.year for record in chain(A, B))
+        if max_year - min_year > 9:
+            return inf
+
         for a in A:
             for b in B:
                 if a.contest is b.contest:
