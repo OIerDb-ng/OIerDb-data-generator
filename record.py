@@ -4,7 +4,23 @@
 from itertools import chain
 from sys import stderr
 import util
-__school_penalty__ = {0: 0, 1: -40, 2: 60, 3: 120, 4: 180, 5: 300}
+
+__school_penalty__ = {
+    0: 0,
+    1: -40,
+    2: 60,
+    3: 120,
+    4: 180,
+    5: 300,
+}
+__contest_type_map__ = {
+    'CSP普及': 'CSP',
+    'CSP提高': 'CSP',
+    'NOIP普及': 'NOIP',
+    'NOIP提高': 'NOIP',
+    'NOI': 'NOI',
+    'NOID类': 'NOI',
+}
 
 
 class Record:
@@ -95,8 +111,15 @@ class Record:
                     return inf
                 if abs(a.gender - b.gender) == 2:
                     return inf
-                if a.contest.school_year() == b.contest.school_year() and len(set(a.ems) & set(b.ems)) == 0:
-                    return inf
+                if a.contest.school_year() == b.contest.school_year():
+                    if len(set(a.ems) & set(b.ems)) == 0:
+                        return inf
+                    # 在同一年中有不同参赛学校的同类赛事的，不合并
+                    if (a.contest.type in __contest_type_map__ and
+                        b.contest.type in __contest_type_map__ and
+                        __contest_type_map__[a.contest.type] == __contest_type_map__[b.contest.type] and
+                        a.school.name != b.school.name):
+                            return inf
 
         schools = set(record.school.id for record in chain(A, B))
         locations = set(record.school.location() for record in chain(A, B))
