@@ -14,7 +14,7 @@ __school_penalty__ = {
     5: 300,
 }
 __contest_type_map__ = {
-    'CSP普及': 'CSP',
+    'CSP入门': 'CSP',
     'CSP提高': 'CSP',
     'NOIP普及': 'NOIP',
     'NOIP提高': 'NOIP',
