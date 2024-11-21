@@ -7,6 +7,8 @@ body:
     attributes:
       value: |
         感谢您的反馈！如果情况允许，您也可以直接发起 Pull Request 进行更正。
+
+        欢迎您在 [项目主页](https://github.com/OIerDb-ng/OIerDb) 的右上方为我们点亮 Star，感谢支持！
   - type: input
     id: contact
     attributes:
