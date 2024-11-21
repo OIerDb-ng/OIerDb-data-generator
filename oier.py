@@ -126,7 +126,7 @@ class OIer:
             if record.contest.type == 'NOI':
                 l = max(l, __clnoi__.get(record.level, 0))
             elif record.contest.type in ['NOIP', 'NOIP提高', 'CSP提高']:
-                n = record.contest.level_counts.total()
+                n = record.contest.capacity if record.contest.capacity else record.contest.level_counts['一等奖'] * 5 
                 if record.rank * 10 <= n: # 七级：在NOIP提高组复赛（CSP-S第二轮）中成绩列全国前10%
                     l = max(l, 7)
                 elif record.rank * 5 <= n: # 六级：在NOIP提高组复赛（CSP-S第二轮）中成绩列全国前20%
@@ -136,7 +136,7 @@ class OIer:
                 else: # 三级：进入NOIP复赛（CSP-J/S第二轮）；
                     l = max(l, 3)
             elif record.contest.type in ['NOIP普及', 'CSP入门']:
-                n = record.contest.level_counts.total()
+                n = record.contest.capacity if record.contest.capacity else record.contest.level_counts['一等奖'] * 5  
                 if record.rank * 5 <= n: # 五级：在NOIP普及组复赛（CSP-J第二轮）中成绩列全国前20%
                     l = max(l, 5)
                 elif record.rank * 2 <= n: # 四级：在NOIP普及组（或提高组）复赛（CSP-J/S第二轮）中成绩列全国前50%
