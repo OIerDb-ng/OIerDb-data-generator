@@ -124,6 +124,7 @@ class Record:
                 # 在高中毕业后又有小学记录的情况下，不应该合并
                 if (a.contest.school_year() < b.contest.school_year() and
                     any(level in a.school.name for level in ['高中', '中学', '高级']) and
+                    '小学' not in a.school.name and
                     '小学' in b.school.name):
                     return inf
 
