@@ -8,7 +8,13 @@ body:
       value: |
         感谢您的反馈！如果情况允许，您也可以直接发起 Pull Request 进行更正。
 
+        > **特别说明**
+        >
+        > 1. 由于 CCF 在奖项公示时并未公布小学选手的年级信息，为保证 OIerDb 的客观中立性，我们不会对这些选手的年级信息做出特别修改。在初中参赛后，年级信息会被自动修正，敬请谅解。
+        > 2. 对于留级的选手，我们会在 OIerDb 页面上作出推测性的提示。OIerDb 的数据以 CCF 官网公示为准，不接受任何消除此类提示的请求。
+
         欢迎您在 [项目主页](https://github.com/OIerDb-ng/OIerDb) 的右上方为我们点亮 Star，感谢支持！
+
   - type: input
     id: contact
     attributes:
@@ -16,6 +22,7 @@ body:
       placeholder: ex. 张三
     validations:
       required: true
+
   - type: dropdown
     id: type
     attributes:
@@ -28,6 +35,7 @@ body:
         - 其他
     validations:
       required: true
+
   - type: textarea
     id: what-happened
     attributes:
@@ -35,6 +43,7 @@ body:
       description: 请具体描述这名选手的信息出现了什么错误，并附上有助于识别该选手的信息（如省份、就读学校列表、年级等，UID 在某些情况下可能会发生变化）。
     validations:
       required: false
+
   - type: checkboxes
     id: terms
     attributes:
