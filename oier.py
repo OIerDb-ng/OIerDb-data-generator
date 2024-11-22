@@ -114,7 +114,10 @@ class OIer:
         self.oierdb_score = s
 
     def compute_ccf_level(self):
-        '计算该 OIer 的 CCF 评分及评级。'
+        '''
+        计算该 OIer 的 CCF 评分及评级。
+        参考资料: https://www.noi.cn/xw/2019-08-26/715369.shtml
+        '''
 
         l = 0
         scores = {}
@@ -123,21 +126,22 @@ class OIer:
             if record.contest.type == 'NOI':
                 l = max(l, __clnoi__.get(record.level, 0))
             elif record.contest.type in ['NOIP', 'NOIP提高', 'CSP提高']:
-                n = record.contest.level_counts['一等奖']
-                if record.rank * 2 <= n:
+                n = record.contest.capacity if record.contest.capacity else record.contest.level_counts['一等奖'] * 5 
+                if record.rank * 10 <= n: # 七级：在NOIP提高组复赛（CSP-S第二轮）中成绩列全国前10%
                     l = max(l, 7)
-                elif record.rank <= n:
+                elif record.rank * 5 <= n: # 六级：在NOIP提高组复赛（CSP-S第二轮）中成绩列全国前20%
                     l = max(l, 6)
-                elif record.level == '二等奖':
+                elif record.rank * 2 <= n: # 四级：在NOIP普及组（或提高组）复赛（CSP-J/S第二轮）中成绩列全国前50%
                     l = max(l, 4)
-                else:
+                else: # 三级：进入NOIP复赛（CSP-J/S第二轮）；
                     l = max(l, 3)
             elif record.contest.type in ['NOIP普及', 'CSP入门']:
-                if record.level == '一等奖':
+                n = record.contest.capacity if record.contest.capacity else record.contest.level_counts['一等奖'] * 5  
+                if record.rank * 5 <= n: # 五级：在NOIP普及组复赛（CSP-J第二轮）中成绩列全国前20%
                     l = max(l, 5)
-                elif record.level == '二等奖':
+                elif record.rank * 2 <= n: # 四级：在NOIP普及组（或提高组）复赛（CSP-J/S第二轮）中成绩列全国前50%
                     l = max(l, 4)
-                else:
+                else: # 三级：进入NOIP复赛（CSP-J/S第二轮）
                     l = max(l, 3)
             elif B := __clother__.get(record.contest.type, 0):
                 n = record.contest.n_contestants()

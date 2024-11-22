@@ -275,14 +275,16 @@
 		"full_score": 600,
 		"name": "NOIP2014提高",
 		"type": "NOIP提高",
-		"year": 2014
+		"year": 2014,
+		"capacity": 5861
 	},
 	{
 		"fall_semester": true,
 		"full_score": 400,
 		"name": "NOIP2014普及",
 		"type": "NOIP普及",
-		"year": 2014
+		"year": 2014,
+		"capacity": 5224
 	},
 	{
 		"fall_semester": false,
@@ -332,14 +334,16 @@
 		"full_score": 600,
 		"name": "NOIP2015提高",
 		"type": "NOIP提高",
-		"year": 2015
+		"year": 2015,
+		"capacity": 6458
 	},
 	{
 		"fall_semester": true,
 		"full_score": 400,
 		"name": "NOIP2015普及",
 		"type": "NOIP普及",
-		"year": 2015
+		"year": 2015,
+		"capacity": 6178
 	},
 	{
 		"fall_semester": false,
@@ -389,14 +393,16 @@
 		"full_score": 600,
 		"name": "NOIP2016提高",
 		"type": "NOIP提高",
-		"year": 2016
+		"year": 2016,
+		"capacity": 8332
 	},
 	{
 		"fall_semester": true,
 		"full_score": 400,
 		"name": "NOIP2016普及",
 		"type": "NOIP普及",
-		"year": 2016
+		"year": 2016,
+		"capacity": 6749
 	},
 	{
 		"fall_semester": false,
@@ -446,14 +452,16 @@
 		"full_score": 600,
 		"name": "NOIP2017提高",
 		"type": "NOIP提高",
-		"year": 2017
+		"year": 2017,
+		"capacity": 10301
 	},
 	{
 		"fall_semester": true,
 		"full_score": 400,
 		"name": "NOIP2017普及",
 		"type": "NOIP普及",
-		"year": 2017
+		"year": 2017,
+		"capacity": 8263
 	},
 	{
 		"fall_semester": false,
@@ -503,14 +511,16 @@
 		"full_score": 600,
 		"name": "NOIP2018提高",
 		"type": "NOIP提高",
-		"year": 2018
+		"year": 2018,
+		"capacity": 12856
 	},
 	{
 		"fall_semester": true,
 		"full_score": 400,
 		"name": "NOIP2018普及",
 		"type": "NOIP普及",
-		"year": 2018
+		"year": 2018,
+		"capacity": 11895
 	},
 	{
 		"fall_semester": false,
@@ -560,14 +570,16 @@
 		"full_score": 600,
 		"name": "CSP2019提高",
 		"type": "CSP提高",
-		"year": 2019
+		"year": 2019,
+		"capacity": 13903
 	},
 	{
 		"fall_semester": true,
 		"full_score": 400,
 		"name": "CSP2019入门",
 		"type": "CSP入门",
-		"year": 2019
+		"year": 2019,
+		"capacity": 15324
 	},
 	{
 		"fall_semester": false,
@@ -610,21 +622,24 @@
 		"full_score": 400,
 		"name": "CSP2020提高",
 		"type": "CSP提高",
-		"year": 2020
+		"year": 2020,
+		"capacity": 11048
 	},
 	{
 		"fall_semester": true,
 		"full_score": 400,
 		"name": "CSP2020入门",
 		"type": "CSP入门",
-		"year": 2020
+		"year": 2020,
+		"capacity": 14971
 	},
 	{
 		"fall_semester": true,
 		"full_score": 400,
 		"name": "NOIP2020",
 		"type": "NOIP",
-		"year": 2020
+		"year": 2020,
+		"capacity": 4693
 	},
 	{
 		"fall_semester": false,
@@ -667,21 +682,24 @@
 		"full_score": 400,
 		"name": "CSP2021提高",
 		"type": "CSP提高",
-		"year": 2021
+		"year": 2021,
+		"capacity": 11601
 	},
 	{
 		"fall_semester": true,
 		"full_score": 400,
 		"name": "CSP2021入门",
 		"type": "CSP入门",
-		"year": 2021
+		"year": 2021,
+		"capacity": 14931
 	},
 	{
 		"fall_semester": true,
 		"full_score": 400,
 		"name": "NOIP2021",
 		"type": "NOIP",
-		"year": 2021
+		"year": 2021,
+		"capacity": 5261
 	},
 	{
 		"fall_semester": false,
@@ -738,21 +756,24 @@
 		"full_score": 400,
 		"name": "CSP2022提高",
 		"type": "CSP提高",
-		"year": 2022
+		"year": 2022,
+		"capacity": 9216
 	},
 	{
 		"fall_semester": true,
 		"full_score": 400,
 		"name": "CSP2022入门",
 		"type": "CSP入门",
-		"year": 2022
+		"year": 2022,
+		"capacity": 11320
 	},
 	{
 		"fall_semester": true,
 		"full_score": 400,
 		"name": "NOIP2022",
 		"type": "NOIP",
-		"year": 2022
+		"year": 2022,
+		"capacity": 4372
 	},
 	{
 		"fall_semester": false,
@@ -816,21 +837,24 @@
 		"full_score": 400,
 		"name": "CSP2023提高",
 		"type": "CSP提高",
-		"year": 2023
+		"year": 2023,
+		"capacity": 19202
 	},
 	{
 		"fall_semester": true,
 		"full_score": 400,
 		"name": "CSP2023入门",
 		"type": "CSP入门",
-		"year": 2023
+		"year": 2023,
+		"capacity": 28869
 	},
 	{
 		"fall_semester": true,
 		"full_score": 400,
 		"name": "NOIP2023",
 		"type": "NOIP",
-		"year": 2023
+		"year": 2023,
+		"capacity": 6670
 	},
 	{
 		"fall_semester": true,
@@ -880,13 +904,15 @@
 		"full_score": 400,
 		"name": "CSP2024提高",
 		"type": "CSP提高",
-		"year": 2024
+		"year": 2024,
+		"capacity": 27521
 	},
 	{
 		"fall_semester": true,
 		"full_score": 400,
 		"name": "CSP2024入门",
 		"type": "CSP入门",
-		"year": 2024
+		"year": 2024,
+		"capacity": 40430
 	}
 ]
