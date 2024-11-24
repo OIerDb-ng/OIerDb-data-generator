@@ -62,6 +62,13 @@ class School:
 
         if name in School.__school_name_map__:
             return School.__school_name_map__[name]
+        
+        # 检测是否为 名称/机构 的形式（湖南的报名信息采用此形式）
+        if "/" in name:
+            name, _ = name.split("/", 1)
+            if name in School.__school_name_map__:
+                return School.__school_name_map__[name]
+
         redirect = api.get_redirect(name)
         if redirect is not None and redirect in School.__school_name_map__:
             return "b", School.__school_name_map__[redirect]
