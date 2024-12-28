@@ -126,7 +126,7 @@ class Record:
                     return inf
                 # 如果存在第一年初一，第二年直升高一的情况，不合并
                 
-                if a.grades in [65536,262144,131072] and b.grades in [524288,1048576,2097152] and a.province != b.province:
+                if (a.grades in [65536,262144,131072] and b.grades in [65536,262144,131072] or a.grades in [524288,1048576,2097152] and b.grades in [524288,1048576,2097152]) and a.province != b.province:
                     return inf
                 # 在同一学段内出现跨省获奖的情况，不合并
 
