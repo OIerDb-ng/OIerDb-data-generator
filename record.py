@@ -121,6 +121,23 @@ class Record:
                     return inf
                 if abs(a.gender - b.gender) == 2:
                     return inf
+
+                if abs(a.contest.school_year() - b.contest.school_year()) == 1 and a.grades==65536 and b.grades==524288:
+                    return inf
+                # 如果存在第一年初一，第二年直升高一的情况，不合并
+                
+                if a.grades in [65536,262144,131072] and b.grades in [524288,1048576,2097152] and a.province != b.province:
+                    return inf
+                # 在同一学段内出现跨省获奖的情况，不合并
+
+                if a.contest.school_year == b.contest.school_year and a.school != b.school:
+                    return inf
+                # 在同一学年中出现就读学校不一致、年级不一致的情况，不合并
+
+                if a.grades in [4290837504,64512,32768,16384,8192] and b.grades in [4290837504,64512,32768,16384,8192] and a.school != b.school:
+                    return inf
+                # 如果处于小学阶段且就读学校不一致，不合并
+
                 if a.contest.school_year() == b.contest.school_year():
                     if len(set(a.ems) & set(b.ems)) == 0:
                         return inf
