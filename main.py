@@ -200,7 +200,7 @@ def __main__():
                         f"\x1b[32m[create]\x1b[0m: (\x1b[35m'{province}'\x1b[0m, \x1b[35m'{city}'\x1b[0m, \x1b[35m'{school_name}'\x1b[0m)",
                         file=stderr,
                     )
-                    print(f"c {province} {city} {school_name}", file=f)
+                    print(f"c {province} {city} {school_name}", file=f,end='\n')
 
     def output_schools():
         "输出学校信息。"
@@ -208,16 +208,16 @@ def __main__():
         output = []
         for school in tqdm(School.get_all()):
             output.append([school.name, school.province, school.city, float(round(school.score, 2))])
-        with open("dist/school.json", "w") as f:
+        with open("dist/school.json", "w", newline='\n') as f:
             json.dump(output, f, ensure_ascii=False)
 
     def output_compressed():
         "输出压缩的结果，不压缩的结果先咕着。"
 
         OIer.sort_by_score()
-        with open("dist/result.txt", "w") as f:
+        with open("dist/result.txt", "w", newline='\n') as f:
             for oier in tqdm(OIer.get_all()):
-                print(oier.to_compress_format(), file=f)
+                print(oier.to_compress_format(), file=f,end='\n')
 
     def compute_sha512():
         """
@@ -229,12 +229,15 @@ def __main__():
 
         with open("dist/result.txt", "rb") as f:
             sha512 = hashlib.sha512(f.read()).hexdigest()
-        with open("dist/result.info.json", "w") as f:
+        with open("dist/result.info.json", "w",newline='\n') as f:
             print('{"sha512":"' + sha512 + '", "size":' + str(file_size) + "}", file=f)
 
     def update_static():
         "调用 update_static.js 以产生静态 JSON 信息。"
-        os.system("./update_static.js")
+        if os.name == 'nt':  # Windows
+            os.system("node update_static.js")
+        else:  # Unix-like (Linux, macOS)
+            os.system("./update_static.js")
 
     def report_status(message):
         "向终端报告当前进度。"
