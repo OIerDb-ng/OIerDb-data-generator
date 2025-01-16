@@ -66,7 +66,7 @@ def __main__():
     import pypinyin
     from contest import Contest
 
-    global add_contestant, contests, contest_type_coefficient, decay_coefficient, enrollment_middle, get_contest_id, get_grades, get_initials, get_mode, get_weighted_mode, lcs, rank_coefficient
+    global add_contestant, contests, contest_type_coefficient, decay_coefficient, enrollment_middle, get_contest_id, get_grades, get_initials, get_mode, get_weighted_mode, lcs, rank_coefficient,is_chinese_char
 
     with open("static/contests.json") as f:
         for contest in json.load(f):
@@ -234,6 +234,18 @@ def __main__():
             for j in range(m):
                 f[i + 1][j + 1] = f[i][j] + 1 if str1[i] == str2[j] else max(f[i + 1][j], f[i][j + 1])
         return f[n][m]
-
+    def is_chinese_char(char):
+        # 判断字符是否为汉字
+        cp = ord(char)
+        if ((cp >= 0x4E00 and cp <= 0x9FFF) or  # 基本汉字
+            (cp >= 0x3400 and cp <= 0x4DBF) or  # 扩展A区
+            (cp >= 0x20000 and cp <= 0x2A6DF) or  # 扩展B区
+            (cp >= 0x2A700 and cp <= 0x2B73F) or  # 扩展C区
+            (cp >= 0x2B740 and cp <= 0x2B81F) or  # 扩展D区
+            (cp >= 0x2B820 and cp <= 0x2CEAF) or  # 扩展E区
+            (cp >= 0x2CEB0 and cp <= 0x2EBEF) or  # 扩展F区
+            (cp >= 0x2F800 and cp <= 0x2FA1F)):  # 兼容扩展
+            return True
+        return False
 
 __main__()
