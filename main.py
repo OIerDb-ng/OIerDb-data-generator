@@ -11,7 +11,7 @@ from record import Record
 from school import School
 from sys import argv, stderr
 from tqdm import tqdm
-from hanzi_pinyin import pinyin
+from pypinyin import pinyin,Style
 
 
 def __main__():
@@ -229,7 +229,7 @@ def __main__():
             for char in chars:
                 if not util.is_chinese_char(char):
                     continue
-                pinyins = pinyin(char)
+                pinyins = pinyin(char, heteronym=True,style=Style.NORMAL)[0]
                 if not pinyins:
                     print(
                     f"\x1b[01mpinyin \x1b[31merror: \x1b[0;37m'未知拼音的汉字: {char}'",
