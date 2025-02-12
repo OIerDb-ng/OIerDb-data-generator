@@ -21,6 +21,11 @@ __contest_type_map__ = {
     "NOI": "NOI",
     "NOID类": "NOI",
 }
+__grades_range__ = {
+    "primary": [4290837504, 64512, 32768, 16384, 8192],
+    "junior": [65536, 262144, 131072, 262144, 458752],
+    "senior": [524288, 1048576, 2097152],
+}
 
 
 class Record:
@@ -117,13 +122,45 @@ class Record:
 
         for a in A:
             for b in B:
+                # 同一比赛中的多条获奖记录，不合并
                 if a.contest is b.contest:
                     return inf
+
+                # 性别不一致，不合并
                 if abs(a.gender - b.gender) == 2:
                     return inf
+
+                # 如果存在第一年初一，第二年直升高一的情况，不合并
+                if (
+                    abs(a.contest.school_year() - b.contest.school_year()) == 1
+                    and a.grades == __grades_range__["junior"][0]
+                    and b.grades == __grades_range__["senior"][0]
+                ):
+                    return inf
+
+                # 在同一学段内出现跨省获奖的情况，不合并
+                if (
+                    (a.grades in __grades_range__["junior"] and b.grades in __grades_range__["junior"])
+                    or (a.grades in __grades_range__["senior"] and b.grades in __grades_range__["senior"])
+                ) and a.province != b.province:
+                    return inf
+
+                # 在同一学年中出现就读学校不一致、年级不一致的情况，不合并
+                if a.contest.school_year == b.contest.school_year and a.school != b.school:
+                    return inf
+
+                # 如果处于小学阶段且就读学校不一致，不合并
+                if (
+                    a.grades in __grades_range__["primary"]
+                    and b.grades in __grades_range__["primary"]
+                    and a.school != b.school
+                ):
+                    return inf
+
                 if a.contest.school_year() == b.contest.school_year():
                     if len(set(a.ems) & set(b.ems)) == 0:
                         return inf
+
                     # 在同一年中有不同参赛学校的同类赛事的，不合并
                     if (
                         a.contest.type in __contest_type_map__
