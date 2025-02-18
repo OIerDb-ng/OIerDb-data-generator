@@ -221,19 +221,19 @@ class Record:
             coeff = max(coeff , 5) # Tentative
         
         # 转学后在学校仍同一城市内的也需要降低合并优先级
-        Locations = set('')
+        Locations = set()
         if (len(change_times_primary) >= 2):
             for i in change_times_primary:
                 Locations.add(i.location)
             if (len(Locations) == 1):
                 coeff = max(coeff, 2.5) # Tentative
-        Locations = set('')
+        Locations = set()
         if (len(change_times_junior) >= 2):
             for i in change_times_junior:
                 Locations.add(i.location)
             if (len(Locations) == 1):
                 coeff = max(coeff, 2.5) # Tentative
-        Locations = set('')
+        Locations = set()
         if (len(change_times_senior) >= 2):
             for i in change_times_senior:
                 Locations.add(i.location)
