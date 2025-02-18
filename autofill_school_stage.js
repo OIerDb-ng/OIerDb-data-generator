@@ -113,6 +113,8 @@ if (isOldFormat) {
       return schoolStageKeys.indexOf(a) - schoolStageKeys.indexOf(b);
     });
 
+    // TODO: 解析 raw.txt，从过往参赛记录中推断学段
+
     if (stages.length === 0) {
       stages.push("未知");
       console.warn(`未知学段：${line}`);
@@ -123,7 +125,7 @@ if (isOldFormat) {
     );
   }
 } else {
-  // 更新已有信息
+  // TODO: 更新已有信息
 }
 
 fs.writeFileSync("data/school_new.txt", newSchools.join("\n") + "\n", "utf-8");
