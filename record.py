@@ -119,7 +119,12 @@ class Record:
         max_year = max(record.contest.year for record in chain(A, B))
         if max_year - min_year > 9:
             return inf
-
+        
+        coeff = 1
+        change_times_primary = set([])
+        change_times_junior = set([])
+        change_times_senior = set([])
+        
         for a in A:
             for b in B:
                 # 同一比赛中的多条获奖记录，不合并
@@ -179,6 +184,28 @@ class Record:
                 ):
                     return inf
 
+                # 升学时跨省的选手需要降低合并优先级，此时很有可能是错误合并
+                if (
+                    (a.grades == __grades_range__["senior"][2] and b.grades == __grades_range__["junior"][0])
+                    or (a.grades == __grades_range__["junior"][0] and b.grades == __grades_range__["senior"][2])
+                ):
+                    coeff = max(coeff , 3) # Tentative
+
+                # 在同一学段（小学、初中、高中）的转学次数一般不会超过一次，合并后在同一学段内出现三个及以上的学校时不合并或降低合并优先级
+                if (a.grades in __grades_range__["primary"]):
+                    change_times_primary.add(a.school)
+                if (a.grades in __grades_range__["junior"]):
+                    change_times_junior.add(a.school)
+                if (a.grades in __grades_range__["senior"]):
+                    change_times_senior.add(a.school)
+
+                if (b.grades in __grades_range__["primary"]):
+                    change_times_primary.add(b.school)
+                if (b.grades in __grades_range__["junior"]):
+                    change_times_junior.add(b.school)
+                if (b.grades in __grades_range__["senior"]):
+                    change_times_senior.add(b.school)
+        
         schools = set(record.school.id for record in chain(A, B))
         locations = set(record.school.location() for record in chain(A, B))
         provinces = set(record.province for record in chain(A, B))
@@ -186,10 +213,38 @@ class Record:
         bem = util.get_mode([record.ems for record in B])
         diff = min(abs(i - j) for i in aem for j in bem)
 
+        if (
+            len(change_times_primary) >= 3
+            or len(change_times_junior) >= 3
+            or len(change_times_senior) >= 3
+        ):
+            coeff = max(coeff , 5) # Tentative
+        
+        # 转学后在学校仍同一城市内的也需要降低合并优先级
+        Locations = set()
+        if (len(change_times_primary) >= 2):
+            for i in change_times_primary:
+                Locations.add(i.location)
+            if (len(Locations) == 1):
+                coeff = max(coeff, 2.5) # Tentative
+        Locations = set()
+        if (len(change_times_junior) >= 2):
+            for i in change_times_junior:
+                Locations.add(i.location)
+            if (len(Locations) == 1):
+                coeff = max(coeff, 2.5) # Tentative
+        Locations = set()
+        if (len(change_times_senior) >= 2):
+            for i in change_times_senior:
+                Locations.add(i.location)
+            if (len(Locations) == 1):
+                coeff = max(coeff, 2.5) # Tentative
+        
         return (
-            __school_penalty__.get(len(schools), 600)
+            (__school_penalty__.get(len(schools), 600)
             + 80 * (len(locations) + len(provinces) - 3)
-            + 100 * diff
+            + 100 * diff)
+            * coeff
         )
 
     @staticmethod
