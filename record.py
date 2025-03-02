@@ -145,21 +145,14 @@ class Record:
 
                 # 在同一学段内出现跨省获奖的情况，不合并
                 if (
-                    (a.grades in __grades_range__["junior"] and b.grades in __grades_range__["junior"])
+                    (a.grades in __grades_range__["primary"] and b.grades in __grades_range__["primary"])
+                    or (a.grades in __grades_range__["junior"] and b.grades in __grades_range__["junior"])
                     or (a.grades in __grades_range__["senior"] and b.grades in __grades_range__["senior"])
                 ) and a.province != b.province:
                     return inf
 
                 # 在同一学年中出现就读学校不一致、年级不一致的情况，不合并
                 if a.contest.school_year == b.contest.school_year and a.school != b.school:
-                    return inf
-
-                # 如果处于小学阶段且就读学校不一致，不合并
-                if (
-                    a.grades in __grades_range__["primary"]
-                    and b.grades in __grades_range__["primary"]
-                    and a.school != b.school
-                ):
                     return inf
 
                 if a.contest.school_year() == b.contest.school_year():
