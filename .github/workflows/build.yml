@@ -34,15 +34,19 @@ jobs:
         run: |
           STATIC_SHA512=$(jq -r .sha512 dist/static.info.json)
           RESULT_SHA512=$(jq -r .sha512 dist/result.info.json)
+          PINYIN_SHA512=$(jq -r .sha512 dist/pinyin.info.json)
 
           mv dist/static.json dist/static.${STATIC_SHA512:0:7}.json
           mv dist/result.txt  dist/result.${RESULT_SHA512:0:7}.txt
+          mv dist/pinyin.txt dist/pinyin.${PINYIN_SHA512:0:7}.txt
 
           ln -s static.info.json dist/static.sha512.json
           ln -s result.info.json dist/result.sha512.json
+          ln -s pinyin.info.json dist/pinyin.sha512.json
 
           ln -s static.${STATIC_SHA512:0:7}.json dist/static.json
           ln -s result.${RESULT_SHA512:0:7}.txt  dist/result.txt
+          ln -s pinyin.${RESULT_SHA512:0:7}.txt  dist/pinyin.txt
       - name: Deploy to GitHub Pages
         if: ${{ github.event_name == 'push' && github.repository_owner == 'oierdb-ng' }}
         uses: peaceiris/actions-gh-pages@v3
@@ -94,12 +98,14 @@ jobs:
         run: |
           STATIC_SHA512=$(jq -r .sha512 static.info.json)
           RESULT_SHA512=$(jq -r .sha512 result.info.json)
+          PINYIN_SHA512=$(jq -r .sha512 pinyin.info.json)
 
           rm -rf cdn-sb/public/oier
           mkdir -p cdn-sb/public/oier
 
           cp static.${STATIC_SHA512:0:7}.json cdn-sb/public/oier/static.${STATIC_SHA512:0:7}.json
           cp result.${RESULT_SHA512:0:7}.txt  cdn-sb/public/oier/result.${RESULT_SHA512:0:7}.txt
+          cp pinyin.${RESULT_SHA512:0:7}.txt  cdn-sb/public/oier/pinyin.${PINYIN_SHA512:0:7}.txt
       - id: get-commit-sha
         run: |
           id="${{ github.sha }}"
