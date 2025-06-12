@@ -11,6 +11,7 @@ from record import Record
 from school import School
 from sys import argv, stderr
 from tqdm import tqdm
+from pypinyin import pinyin,Style
 
 
 def __main__():
@@ -220,6 +221,24 @@ def __main__():
             for oier in tqdm(OIer.get_all()):
                 print(oier.to_compress_format(), file=f, end="\n")
 
+    def output_pinyin():
+        with open("dist/pinyin.txt", "w", newline='\n') as f:
+            chars = set()
+            for oier in tqdm(OIer.get_all()):
+                for char in oier.name:
+                    chars.add(char)
+            for char in chars:
+                if not util.is_chinese_char(char):
+                    continue
+                pinyins = pinyin(char, heteronym=True,style=Style.NORMAL)[0]
+                if not pinyins:
+                    print(
+                    f"\x1b[01mpinyin \x1b[31merror: \x1b[0;37m'未知拼音的汉字: {char}'",
+                    file=stderr,
+                    )
+                    continue
+                print(f"{char},{','.join(pinyins)}", file=f)
+
     def compute_sha512():
         """
         计算 dist/result.txt 的 SHA512 值，保存在 sha512/result 中。
@@ -231,6 +250,11 @@ def __main__():
         with open("dist/result.txt", "rb") as f:
             sha512 = hashlib.sha512(f.read()).hexdigest()
         with open("dist/result.info.json", "w", newline="\n") as f:
+            print('{"sha512":"' + sha512 + '", "size":' + str(file_size) + "}", file=f)
+
+        with open("dist/pinyin.txt", "rb") as f:
+            sha512 = hashlib.sha512(f.read()).hexdigest()
+        with open("dist/pinyin.info.json", "w",newline='\n') as f:
             print('{"sha512":"' + sha512 + '", "size":' + str(file_size) + "}", file=f)
 
     def update_static():
@@ -257,12 +281,15 @@ def __main__():
     report_status("分析选手中")
     analyze_individual_oier()
 
-    if "--merge-schools" in argv:
-        report_status("尝试合并学校中")
-        merge_schools()
+    # if "--merge-schools" in argv:
+    #     report_status("尝试合并学校中")
+    #     merge_schools()
 
     report_status("输出到 dist/result.txt 中")
     output_compressed()
+
+    report_status("输出选手姓名拼音到 dist/pinyin.txt 中")
+    output_pinyin()
 
     report_status("计算 SHA512 摘要中")
     compute_sha512()
