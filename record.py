@@ -164,7 +164,7 @@ class Record:
                         a.contest.type in __contest_type_map__
                         and b.contest.type in __contest_type_map__
                         and __contest_type_map__[a.contest.type] == __contest_type_map__[b.contest.type]
-                        and a.school.name != b.school.name
+                        and a.school is not b.school
                     ):
                         return inf
 
@@ -179,8 +179,11 @@ class Record:
 
                 # 升学时跨省的选手需要降低合并优先级，此时很有可能是错误合并
                 if (
-                    (a.grades == __grades_range__["senior"][2] and b.grades == __grades_range__["junior"][0])
-                    or (a.grades == __grades_range__["junior"][0] and b.grades == __grades_range__["senior"][2])
+                    (
+                        (a.grades == __grades_range__["senior"][2] and b.grades == __grades_range__["junior"][0])
+                        or (a.grades == __grades_range__["junior"][0] and b.grades == __grades_range__["senior"][2])
+                    )
+                    and a.province != b.province
                 ):
                     coeff = max(coeff , 3) # Tentative
 
