@@ -944,5 +944,19 @@
     "name": "APIO2025",
     "type": "APIO",
     "year": 2025
+  },
+  {
+    "fall_semester": false,
+    "full_score": 705,
+    "name": "NOI2025",
+    "type": "NOI",
+    "year": 2025
+  },
+  {
+    "fall_semester": false,
+    "full_score": 705,
+    "name": "NOI2025夏令营",
+    "type": "NOID类",
+    "year": 2025
   }
 ]
