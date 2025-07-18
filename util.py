@@ -84,6 +84,11 @@ def __main__():
     with open("static/scoring.json") as f:
         scoring = json.load(f)
 
+    with open("static/name_exceptions.json") as f:
+        name_exceptions = json.load(f)
+
+    pypinyin.load_single_dict({ ord(k): v for k, v in name_exceptions.items() })
+
     rc_list_legacy = (
         [D(i) for i in range(100, 39, -1)]
         + [D("0.15") * i for i in range(240, 50, -1)]
