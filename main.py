@@ -26,10 +26,11 @@ def __main__():
         if line.startswith("#"):  # 注释
             return
         li = line.split(",")
-        if len(li) < 3:
+        if len(li) < 4:
             raise ValueError("格式错误")
-        province, city, name, *aliases = li
-        School.create(name, province, city, aliases)
+        province, city, _level, name, *aliases = li
+        levels = _level.split("/") if _level else ["未知"]
+        School.create(name, province, city, levels, aliases)
 
     def parse_school():
         "解析 school.txt 文件。"
