@@ -958,5 +958,13 @@
     "name": "NOI2025夏令营",
     "type": "NOID类",
     "year": 2025
+  },
+  {
+    "capacity": 330,
+    "fall_semester": false,
+    "full_score": 600,
+    "name": "IOI2025",
+    "type": "IOI",
+    "year": 2025
   }
 ]
