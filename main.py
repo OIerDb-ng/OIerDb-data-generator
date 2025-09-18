@@ -62,10 +62,21 @@ def __main__():
         contest = Contest.by_name(contest_name)
 
         try:
-            school = School.by_name(school_name)
+            school = School.by_name_in_province(school_name, province)
         except ValueError as e:
-            new_schools.append((province, school_name))
-            raise e
+            if '--disable-school-fallback' in argv:
+                new_schools.append((province, school_name))
+                raise e
+            else:
+                try:
+                    print(
+                        f"\x1b[33mwarning: \x1b[0;37m无法识别学校名 \x1b[35m'{school_name}'\x1b[0m 在省份 \x1b[35m'{province}'\x1b[0m 中，回退到全局查找\x1b[0m",
+                        file=stderr,
+                    )
+                    school = School.by_name(school_name)
+                except ValueError as e:
+                    new_schools.append((province, school_name))
+                    raise e
 
         grades = util.get_grades(grade_name)
         gender = gender_map.get(gender_name, 0)
