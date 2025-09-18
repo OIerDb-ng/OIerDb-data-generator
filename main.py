@@ -9,8 +9,9 @@ from contest import Contest
 from oier import OIer
 from record import Record
 from school import School
-from sys import argv, stderr
+from sys import argv, stderr, executable
 from tqdm import tqdm
+import subprocess
 
 
 def __main__():
@@ -245,11 +246,9 @@ def __main__():
             print('{"sha512":"' + sha512 + '", "size":' + str(file_size) + "}", file=f)
 
     def update_static():
-        "调用 update_static.js 以产生静态 JSON 信息。"
-        if os.name == "nt":  # Windows
-            os.system("node update_static.js")
-        else:  # Unix-like (Linux, macOS)
-            os.system("./update_static.js")
+        "调用 update_static.py 以产生静态 JSON 信息。"
+        
+        subprocess.run([executable, "update_static.py"], check=True)
 
     def report_status(message):
         "向终端报告当前进度。"
