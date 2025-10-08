@@ -55,6 +55,12 @@ class Contest:
         return len(Contest.__all_contests_list__)
 
     @staticmethod
+    def get_all():
+        "获取当前所有比赛的列表。"
+
+        return Contest.__all_contests_list__
+
+    @staticmethod
     def is_score_valid(score):
         """判断分值字段是否符合格式。
 
