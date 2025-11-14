@@ -966,5 +966,21 @@
     "name": "IOI2025",
     "type": "IOI",
     "year": 2025
+  },
+  {
+    "fall_semester": true,
+    "full_score": 400,
+    "name": "CSP2025提高",
+    "type": "CSP提高",
+    "year": 2025,
+    "capacity": 30497
+  },
+  {
+    "fall_semester": true,
+    "full_score": 400,
+    "name": "CSP2025入门",
+    "type": "CSP入门",
+    "year": 2025,
+    "capacity": 39205
   }
 ]
