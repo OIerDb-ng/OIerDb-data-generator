@@ -9,8 +9,9 @@ from contest import Contest
 from oier import OIer
 from record import Record
 from school import School
-from sys import argv, stderr
+from sys import argv, stderr, executable
 from tqdm import tqdm
+import subprocess
 
 
 def __main__():
@@ -62,10 +63,21 @@ def __main__():
         contest = Contest.by_name(contest_name)
 
         try:
-            school = School.by_name(school_name)
+            school = School.by_name_in_province(school_name, province)
         except ValueError as e:
-            new_schools.append((province, school_name))
-            raise e
+            if '--disable-school-fallback' in argv:
+                new_schools.append((province, school_name))
+                raise e
+            else:
+                try:
+                    print(
+                        f"\x1b[33mwarning: \x1b[0;37m无法识别学校名 \x1b[35m'{school_name}'\x1b[0m 在省份 \x1b[35m'{province}'\x1b[0m 中，回退到全局查找\x1b[0m",
+                        file=stderr,
+                    )
+                    school = School.by_name(school_name)
+                except ValueError as e:
+                    new_schools.append((province, school_name))
+                    raise e
 
         grades = util.get_grades(grade_name)
         gender = gender_map.get(gender_name, 0)
@@ -154,6 +166,65 @@ def __main__():
             oier.compute_ccf_level()
             oier.compute_oierdb_score()
 
+    def validate_data():
+        "验证数据完整性，检查是否存在重复的 UID、学校 ID、比赛 ID 及【比赛 ID、UID】组合。"
+
+        errors = []
+
+        # 检查重复的 UID
+        uid_list = [oier.uid for oier in OIer.get_all()]
+        uid_counter = {}
+        for uid in uid_list:
+            uid_counter[uid] = uid_counter.get(uid, 0) + 1
+        duplicate_uids = [uid for uid, count in uid_counter.items() if count > 1]
+        if duplicate_uids:
+            errors.append(f"发现重复的 UID: {', '.join(map(str, duplicate_uids))}")
+
+        # 检查重复的学校 ID
+        school_id_list = [school.id for school in School.get_all()]
+        school_id_counter = {}
+        for sid in school_id_list:
+            school_id_counter[sid] = school_id_counter.get(sid, 0) + 1
+        duplicate_school_ids = [sid for sid, count in school_id_counter.items() if count > 1]
+        if duplicate_school_ids:
+            errors.append(f"发现重复的学校 ID: {', '.join(map(str, duplicate_school_ids))}")
+
+        # 检查重复的比赛 ID
+        contest_id_list = [contest.id for contest in Contest.get_all()]
+        contest_id_counter = {}
+        for cid in contest_id_list:
+            contest_id_counter[cid] = contest_id_counter.get(cid, 0) + 1
+        duplicate_contest_ids = [cid for cid, count in contest_id_counter.items() if count > 1]
+        if duplicate_contest_ids:
+            errors.append(f"发现重复的比赛 ID: {', '.join(map(str, duplicate_contest_ids))}")
+
+        # 检查重复的【比赛 ID、UID】组合
+        contest_uid_pairs = []
+        for oier in OIer.get_all():
+            for record in oier.records:
+                contest_uid_pairs.append((record.contest.id, oier.uid))
+        
+        pair_counter = {}
+        for pair in contest_uid_pairs:
+            pair_counter[pair] = pair_counter.get(pair, 0) + 1
+        duplicate_pairs = [pair for pair, count in pair_counter.items() if count > 1]
+        if duplicate_pairs:
+            errors.append(
+                f"发现重复的【比赛 ID、UID】组合: " + 
+                ', '.join([f"(比赛ID: {cid}, UID: {uid})" for cid, uid in duplicate_pairs])
+            )
+
+        # 如果存在错误，输出并退出
+        if errors:
+            print("\n" + "=" * 60, file=stderr)
+            print("\x1b[01;31m数据验证失败！发现以下错误：\x1b[0m", file=stderr)
+            for error in errors:
+                print(f"\x1b[31m  - {error}\x1b[0m", file=stderr)
+            print("=" * 60, file=stderr)
+            raise ValueError("数据验证失败，存在重复数据，无法生成最终结果")
+
+        print("\x1b[32m数据验证通过，未发现重复数据\x1b[0m", file=stderr)
+
     def merge_schools():
         "合并新增学校信息，输出到 dist/merge_preview.txt 中。"
 
@@ -234,11 +305,9 @@ def __main__():
             print('{"sha512":"' + sha512 + '", "size":' + str(file_size) + "}", file=f)
 
     def update_static():
-        "调用 update_static.js 以产生静态 JSON 信息。"
-        if os.name == "nt":  # Windows
-            os.system("node update_static.js")
-        else:  # Unix-like (Linux, macOS)
-            os.system("./update_static.js")
+        "调用 update_static.py 以产生静态 JSON 信息。"
+        
+        subprocess.run([executable, "update_static.py"], check=True)
 
     def report_status(message):
         "向终端报告当前进度。"
@@ -256,6 +325,9 @@ def __main__():
 
     report_status("分析选手中")
     analyze_individual_oier()
+
+    report_status("验证数据完整性中")
+    validate_data()
 
     if "--merge-schools" in argv:
         report_status("尝试合并学校中")

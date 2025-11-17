@@ -9,6 +9,7 @@ import util
 class School:
     __all_school_list__ = []
     __school_name_map__ = {}
+    __school_name_map_by_province__ = {}
     __schools_by_pc__ = {}
 
     def __init__(self, idx, name, province, city, aliases):
@@ -35,9 +36,23 @@ class School:
         School.__school_name_map__[name] = school
         for alias in aliases:
             School.__school_name_map__[alias] = school
+        
+        # 按省份存储学校名称映射
+        if province not in School.__school_name_map_by_province__:
+            School.__school_name_map_by_province__[province] = {}
+        if name != "" and name in School.__school_name_map_by_province__[province]:
+            print(f"\x1b[01mschool.txt: \x1b[031mwarning: \x1b[0;37m学校 '{name}' 在省份 '{province}' 内重复定义\x1b[0m")
+        School.__school_name_map_by_province__[province][name] = school
+        for alias in aliases:
+            if alias != "" and alias in School.__school_name_map_by_province__[province]:
+                print(f"\x1b[01mschool.txt: \x1b[031mwarning: \x1b[0;37m学校别名 '{alias}' 在省份 '{province}' 内重复定义\x1b[0m")
+            School.__school_name_map_by_province__[province][alias] = school
+        
         pc_key = (province, city)
         if pc_key not in School.__schools_by_pc__:
             School.__schools_by_pc__[pc_key] = []
+        if school in School.__schools_by_pc__[pc_key]:
+            print(f"\x1b[01mschool.txt: \x1b[031mwarning: \x1b[0;37m学校 '{name}' 在全局范围内重复定义\x1b[0m")
         School.__schools_by_pc__[pc_key].append(school)
         return school
 
@@ -51,6 +66,22 @@ class School:
         if name in School.__school_name_map__:
             return School.__school_name_map__[name]
         raise ValueError(f"未知的学校名：\x1b[32m'{name}'\x1b[0m")
+
+    @staticmethod
+    def by_name_in_province(name, province):
+        """根据名称和省份返回学校。
+
+        name: 学校名称。
+        province: 省份。
+        """
+
+        # 首先尝试在指定省份内查找
+        if province in School.__school_name_map_by_province__:
+            province_map = School.__school_name_map_by_province__[province]
+            if name in province_map:
+                return province_map[name]
+
+        raise ValueError(f"未知的学校名：\x1b[32m'{name}'\x1b[0m（省份：{province}）")
 
     @staticmethod
     def find_candidate(name, province):
