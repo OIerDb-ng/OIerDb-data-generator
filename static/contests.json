@@ -982,5 +982,13 @@
     "type": "CSP入门",
     "year": 2025,
     "capacity": 39205
+  },
+  {
+    "fall_semester": true,
+    "full_score": 400,
+    "name": "NOIP2025",
+    "type": "NOIP",
+    "year": 2025,
+    "capacity": 7548
   }
 ]
