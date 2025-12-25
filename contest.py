@@ -124,7 +124,7 @@ class Contest:
                     )
                 elif score > self.contestants[-1].score:
                     print(
-                        f"\x1b[01;33mwarning: \x1b[0m不单调的分数：\x1b[32m{score}\x1b[0m > \x1b[32m{self.contestants[-1].score}\x1b[0m，于比赛 \x1b[32m'{self.name}'\x1b[0m",
+                        f"\x1b[01;33mwarning: \x1b[0m不单调的分数：\x1b[32m{score}\x1b[0m（{oier.name}） > \x1b[32m{self.contestants[-1].score}\x1b[0m（{self.contestants[-1].oier.name}），于比赛 \x1b[32m'{self.name}'\x1b[0m",
                         file=stderr,
                     )
                 rank = len(self.contestants) + 1

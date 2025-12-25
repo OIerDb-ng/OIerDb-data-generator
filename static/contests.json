@@ -990,5 +990,12 @@
     "type": "NOIP",
     "year": 2025,
     "capacity": 7548
+  },
+  {
+    "fall_semester": true,
+    "full_score": 400,
+    "name": "NGOI2026",
+    "type": "NGOI",
+    "year": 2025
   }
 ]
