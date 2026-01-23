@@ -35,7 +35,7 @@ def __main__():
     def parse_school():
         "解析 school.txt 文件。"
 
-        with open("data/school.txt") as f:
+        with open("data/school.txt", encoding="utf-8") as f:
             raw_data = f.readlines()
         for idx, line in tqdm(enumerate(raw_data), total=len(raw_data)):
             try:
@@ -91,7 +91,7 @@ def __main__():
     def parse_raw():
         "解析 raw.txt 文件。"
 
-        with open("data/raw.txt") as f:
+        with open("data/raw.txt", encoding="utf-8") as f:
             raw_data = f.readlines()
         for idx, line in tqdm(enumerate(raw_data), total=len(raw_data)):
             try:
@@ -230,7 +230,7 @@ def __main__():
 
         nonlocal new_schools
         new_schools = sorted(set(new_schools))
-        with open("dist/merge_preview.txt", "w") as f:
+        with open("dist/merge_preview.txt", "w", encoding="utf-8") as f:
             print(
 """# 用 '#' 号表示注释。
 # 这是由 main.py 自动生成的学校合并确认文件，本文件的格式有如下几种：
@@ -280,14 +280,14 @@ def __main__():
         output = []
         for school in tqdm(School.get_all()):
             output.append([school.name, school.province, school.city, float(round(school.score, 2))])
-        with open("dist/school.json", "w", newline="\n") as f:
+        with open("dist/school.json", "w", newline="\n", encoding="utf-8") as f:
             json.dump(output, f, ensure_ascii=False)
 
     def output_compressed():
         "输出压缩的结果，不压缩的结果先咕着。"
 
         OIer.sort_by_score()
-        with open("dist/result.txt", "w", newline="\n") as f:
+        with open("dist/result.txt", "w", newline="\n", encoding="utf-8") as f:
             for oier in tqdm(OIer.get_all()):
                 print(oier.to_compress_format(), file=f, end="\n")
 
@@ -301,7 +301,7 @@ def __main__():
 
         with open("dist/result.txt", "rb") as f:
             sha512 = hashlib.sha512(f.read()).hexdigest()
-        with open("dist/result.info.json", "w", newline="\n") as f:
+        with open("dist/result.info.json", "w", newline="\n", encoding="utf-8") as f:
             print('{"sha512":"' + sha512 + '", "size":' + str(file_size) + "}", file=f)
 
     def update_static():
