@@ -937,7 +937,6 @@
     "type": "WC",
     "year": 2025
   },
-
   {
     "fall_semester": false,
     "full_score": 300,
@@ -982,5 +981,27 @@
     "type": "CSP入门",
     "year": 2025,
     "capacity": 39205
+  },
+  {
+    "fall_semester": true,
+    "full_score": 400,
+    "name": "NOIP2025",
+    "type": "NOIP",
+    "year": 2025,
+    "capacity": 7548
+  },
+  {
+    "fall_semester": true,
+    "full_score": 400,
+    "name": "NGOI2026",
+    "type": "NGOI",
+    "year": 2025
+  },
+  {
+    "fall_semester": false,
+    "full_score": 300,
+    "name": "WC2026",
+    "type": "WC",
+    "year": 2026
   }
 ]
