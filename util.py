@@ -68,23 +68,23 @@ def __main__():
 
     global add_contestant, contests, contest_type_coefficient, decay_coefficient, enrollment_middle, get_contest_id, get_grades, get_initials, get_mode, get_weighted_mode, lcs, rank_coefficient
 
-    with open("static/contests.json") as f:
+    with open("static/contests.json", encoding="utf-8") as f:
         for contest in json.load(f):
             Contest.create(contest)
 
-    with open("static/grades.json") as f:
+    with open("static/grades.json", encoding="utf-8") as f:
         g_ = json.load(f)
     g_initial = g_["initial"]
     g_element = g_["element"]
     g_special = g_["special"]
 
-    with open("static/surnames.json") as f:
+    with open("static/surnames.json", encoding="utf-8") as f:
         surnames = json.load(f)
 
-    with open("static/scoring.json") as f:
+    with open("static/scoring.json", encoding="utf-8") as f:
         scoring = json.load(f)
 
-    with open("static/name_exceptions.json") as f:
+    with open("static/name_exceptions.json", encoding="utf-8") as f:
         name_exceptions = json.load(f)
 
     pypinyin.load_single_dict({ ord(k): v for k, v in name_exceptions.items() })
