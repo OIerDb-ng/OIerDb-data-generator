@@ -1003,5 +1003,12 @@
     "name": "WC2026",
     "type": "WC",
     "year": 2026
+  },
+  {
+    "fall_semester": false,
+    "full_score": 300,
+    "name": "APIO2026中国区",
+    "type": "APIO",
+    "year": 2026
   }
 ]
