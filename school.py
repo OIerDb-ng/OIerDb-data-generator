@@ -11,27 +11,30 @@ class School:
     __school_name_map__ = {}
     __school_name_map_by_province__ = {}
     __schools_by_pc__ = {}
+    __schools_by_level__ = {}
 
-    def __init__(self, idx, name, province, city, aliases):
+    def __init__(self, idx, name, province, city, levels, aliases):
         self.id = idx
         self.name = name
         self.province = province
         self.city = city
+        self.levels = levels
         self.aliases = aliases
         self.score = util.D(0)
 
     @staticmethod
-    def create(name, province, city, aliases):
+    def create(name, province, city, levels, aliases):
         """新建学校。
 
         name: 正式名称。
         province: 省份。
         city: 城市（或区）。
+        levels: 学段列表。
         aliases: 别名列表（可以为空）。
         """
 
         idx = School.count_all()
-        school = School(idx, name, province, city, aliases)
+        school = School(idx, name, province, city, levels, aliases)
         School.__all_school_list__.append(school)
         School.__school_name_map__[name] = school
         for alias in aliases:
@@ -54,6 +57,10 @@ class School:
         if school in School.__schools_by_pc__[pc_key]:
             print(f"\x1b[01mschool.txt: \x1b[031mwarning: \x1b[0;37m学校 '{name}' 在全局范围内重复定义\x1b[0m")
         School.__schools_by_pc__[pc_key].append(school)
+        for level in levels:
+            if level not in School.__schools_by_level__:
+                School.__schools_by_level__[level] = []
+            School.__schools_by_level__[level].append(school)
         return school
 
     @staticmethod
