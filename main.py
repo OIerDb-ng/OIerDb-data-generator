@@ -274,6 +274,14 @@ def __main__():
                     )
                     print(f"c {province} {city} {school_name}", file=f, end="\n")
 
+    def export_unknown_schools():
+        "导出未识别到的学校信息，输出到 dist/unknown-schools.txt 中，一行一个。"
+
+        unknown_schools = sorted(set(new_schools))
+        with open("dist/unknown-schools.txt", "w", newline="\n", encoding="utf-8") as f:
+            for province, school_name in unknown_schools:
+                print(f"{province},{school_name}", file=f)
+
     def output_schools():
         "输出学校信息。"
 
@@ -332,6 +340,10 @@ def __main__():
     if "--merge-schools" in argv:
         report_status("尝试合并学校中")
         merge_schools()
+
+    if "--export-unknown-schools" in argv:
+        report_status("导出未识别学校中")
+        export_unknown_schools()
 
     report_status("输出到 dist/result.txt 中")
     output_compressed()
