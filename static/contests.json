@@ -1024,5 +1024,12 @@
     "name": "NOI2026",
     "type": "NOI",
     "year": 2026
+  },
+  {
+    "fall_semester": false,
+    "full_score": 705,
+    "name": "NOI2026夏令营",
+    "type": "NOID类",
+    "year": 2026
   }
 ]
