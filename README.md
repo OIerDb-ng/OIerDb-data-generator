@@ -1,5 +1,7 @@
 # OIerDb NG Data Generator
 
+> **Warning**: 本项目已经合并至 [OIerDb-ng/OIerDb](https://github.com/OIerDb-ng/OIerDb)。对于今后的所有数据维护相关的内容，请前往 [OIerDb-ng/OIerDb](https://github.com/OIerDb-ng/OIerDb) 处理。本仓库将在处理完所有遗留 Issues 后归档。
+
 本项目中的代码来自 [OIerDb-ng/OIer](https://github.com/OIerDb-ng/OIer/tree/oierdb-ng/model) 仓库，经过部分修改以适配 [OIerDb-ng/OIerDb](https://github.com/OIerDb-ng/OIerDb) 。
 
 ## 使用
