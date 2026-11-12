@@ -1,5 +1,14 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
+
 contact_links:
+  - name: 选手信息错误
+    url: https://github.com/OIerDb-ng/OIerDb/issues/new?template=oier.yml
+    about: 选手被错误拆分、合并等情况。点击右侧「Open」按钮提交反馈。
+
+  - name: 学校信息错误
+    url: https://github.com/OIerDb-ng/OIerDb/issues/new?template=school.yml
+    about: 学校名称、地区错误等情况。点击右侧「Open」按钮提交反馈。
+
   - name: 网站功能相关问题
     url: https://github.com/OIerDb-ng/OIerDb/issues/new/choose
-    about: 数据无关的问题请移步 OIerDb-ng/OIerDb 仓库。
+    about: 数据无关的问题请移步 OIerDb-ng/OIerDb 仓库提交反馈。
